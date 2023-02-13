@@ -36,7 +36,7 @@
 export default {
     props: {
         /**
-         * @options: {variant: '', colorScheme: '', inputSettings, labelSettings, leadingIcon, trailingIcon}
+         * @options: {variant, colorScheme, inputSettings, labelSettings, leadingIcon, trailingIcon}
          * @variant: 'flat'
          * @colorScheme: 'primary', 'secondary'
          * @inputSettings: {type: String, placeholder: String, id: String}
@@ -61,7 +61,7 @@ export default {
     },
     computed: {
         getRootWrapperClass() {
-            return `text-input--faded--${this.options.colorScheme}`;
+            return `text-input--${this.options.variant}--${this.options.colorScheme}`;
         },
         getTextInputWrapperClass() {
             let inputWrapperClass = 'text-input__wrapper';

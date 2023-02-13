@@ -1,0 +1,5 @@
+@use 'core/variants/flat';
+
+.btn--flat--primary{
+    @include flat.init('primary');
+}

@@ -83,6 +83,37 @@ export default {
                     margin-bottom: 0;
                 }
             }
+
+            .btn--flat--primary{
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                max-width: 150px;
+                margin-left: auto;
+                margin-right: auto;
+                transition: all .15s ease-in-out;
+                background-color: map.get(main.$primary, 900);
+                box-shadow: 0 6px rgba(map.get(main.$primary, 900), 0.4);
+                @include padding.vertical((
+                    xsm: 15
+                ));
+                @include margin.top((
+                    xsm: 25
+                ));
+                &:hover{
+                    background-color: lighten(map.get(main.$primary, 900), 5%);
+                }
+
+                &.btn--loading{
+                    background-color: rgba(map.get(main.$primary, 900), 0.3);
+                }
+
+                &:focus,
+                &.btn--loading{
+                    transform: translateY(4px);
+                    box-shadow: 0 2px rgba(map.get(main.$primary, 900), 0.4);
+                }
+            }
         }
     }
 }

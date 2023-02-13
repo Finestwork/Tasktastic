@@ -1,0 +1,23 @@
+@use '../../../../../2-Tools/functions/convertions/pixel';
+
+@mixin init{
+    .btn__leading-icon{
+        margin-right: pixel.toRem(7);
+    }
+
+    .btn__trailing-icon{
+        margin-left: pixel.toRem(7);
+    }
+
+    .btn__leading-icon,
+    .btn__trailing-icon{
+        display: flex;
+        width: 11px;
+        height: 11px;
+        svg{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

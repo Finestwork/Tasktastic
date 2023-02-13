@@ -1,0 +1,22 @@
+@use '../../../../../2-Tools/functions/convertions/pixel';
+
+@mixin init{
+    .btn__loader{
+        display: flex;
+        align-items: center;
+
+        .loader{
+            &__icon{
+                display: flex;
+                width: 13px;
+                height: 13px;
+                margin-right: pixel.toRem(7);
+                svg{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

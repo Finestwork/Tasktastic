@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use '../../../../../../scss/1-Settings/css-properties/font-size/major-second';
+@use '../../../../../../scss/1-Settings/css-properties/box-shadow/transition' as box-shadow-transition;
+@use '../../../../../../scss/2-Tools/functions/convertions/pixel';
+
+@mixin init{
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: pixel.toRem(12);
+    transition: box-shadow-transition.$transition-linear;
+    font-size: pixel.toRem(map.get(major-second.$scale, 2));
+}

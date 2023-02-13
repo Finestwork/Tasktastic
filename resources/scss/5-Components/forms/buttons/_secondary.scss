@@ -1,0 +1,5 @@
+@use 'core/variants/flat';
+
+.btn--flat--secondary{
+    @include flat.init('secondary');
+}
