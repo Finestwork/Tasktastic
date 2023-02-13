@@ -3,6 +3,9 @@
         <form class="form">
             <FormHeader />
             <FormFields />
+            <p class="form__no-account">
+                Not registered yet? Create an account <a href="#">here</a>
+            </p>
         </form>
     </div>
 </template>
@@ -23,6 +26,7 @@ export default {
 @use 'sass:map';
 @use '../../../scss/1-Settings/css-properties/font-size/major-second';
 @use '../../../scss/1-Settings/css-properties/colors/main';
+@use '../../../scss/1-Settings/css-properties/colors/text';
 @use '../../../scss/2-Tools/mixins/css-properties/width-and-height';
 @use '../../../scss/2-Tools/mixins/css-properties/font-size';
 @use '../../../scss/2-Tools/mixins/css-properties/padding';
@@ -47,7 +51,7 @@ export default {
         border-radius: 15px;
         box-shadow: inset 0 -6px lighten(map.get(main.$primary, 200), 0);
         @include padding.all-sides((
-            xsm: [25, 12, 35, 12]
+            xsm: [25, 12, 20, 12]
         ));
 
         &__header{
@@ -136,6 +140,27 @@ export default {
                 &:hover{
                     text-decoration: underline;
                     color: lighten(map.get(main.$primary, 900), 15%);
+                }
+            }
+        }
+        &__no-account{
+            font-weight: 500;
+            color: map.get(text.$main, 400);
+            @include margin.top((
+                xsm: 45
+            ));
+            @include font-size.responsive((
+                xsm: map.get(major-second.$scale, 2)
+            ));
+
+            a{
+                color: map.get(main.$primary, 500);
+                &:focus{
+                    outline: none;
+                    text-decoration: underline;
+                }
+                &:hover{
+                    color: darken(map.get(main.$primary, 500), 15%);
                 }
             }
         }
