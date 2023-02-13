@@ -1,0 +1,76 @@
+@use 'sass:map';
+@use '../shared-styles/button';
+@use '../shared-styles/icons';
+@use '../shared-styles/main-content';
+@use '../shared-styles/loader';
+@use '../../../../../1-Settings/css-properties/colors/main';
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/primary' as box-shadow-primary;
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/secondary' as box-shadow-secondary;
+
+@mixin init($color-scheme){
+    @include button.init;
+    @include main-content.init;
+    @include icons.init;
+    @include loader.init;
+    border: none;
+    background-color: white;
+
+    @if($color-scheme == 'primary') { @include primary-color-scheme; }
+    @elseif($color-scheme == 'secondary') { @include secondary-color-scheme; }
+}
+
+
+@mixin primary-color-scheme{
+    color: map.get(main.$primary, 500);
+
+    &:focus{
+        outline: none;
+        @include box-shadow-primary.lightness(lighter, md);
+    }
+
+    &:focus,
+    &:hover{
+        background-color: lighten(map.get(main.$primary, 500), 30%);
+    }
+
+    .btn__leading-icon svg path,
+    .btn__trailing-icon svg path{
+        fill: map.get(main.$primary, 500);
+    }
+
+    .loader__icon svg path{
+        stroke: map.get(main.$primary, 500);
+    }
+
+    &.btn--loading:disabled{
+        cursor: progress;
+        background-color: lighten(map.get(main.$primary, 500), 10%);
+    }
+}
+
+@mixin secondary-color-scheme{
+    color: map.get(main.$secondary, 500);
+    &:focus{
+        outline: none;
+        @include box-shadow-secondary.lightness(light, md);
+    }
+
+    &:focus,
+    &:hover{
+        background-color: lighten(map.get(main.$secondary, 500), 35%);
+    }
+
+    &.btn--loading:disabled{
+        cursor: progress;
+        background-color: lighten(map.get(main.$secondary, 500), 15%);
+    }
+
+    .btn__leading-icon svg path,
+    .btn__trailing-icon svg path{
+        fill: map.get(main.$secondary, 500);
+    }
+
+    .loader__icon svg path{
+        stroke: map.get(main.$secondary, 500);
+    }
+}

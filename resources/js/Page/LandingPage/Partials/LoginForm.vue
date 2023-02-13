@@ -44,7 +44,7 @@ export default {
                 inputSettings: {
                     type: 'text',
                     placeholder: 'Place your email here',
-                    id: 'emailTxtInput',
+                    id: 'loginEmailTxtInput',
                     autocomplete: false,
                 },
             },
@@ -59,7 +59,7 @@ export default {
                 inputSettings: {
                     type: 'password',
                     placeholder: 'Place your password here',
-                    id: 'passwordTxtInput',
+                    id: 'loginPasswordTxtInput',
                 },
             },
             submitBtnOptions: {
@@ -94,7 +94,7 @@ export default {
 @use '../../../../scss/2-Tools/mixins/css-properties/margin';
 
 // prettier-ignore
-.form{
+.login-form{
     &__fields{
         @include margin.top((
             xsm: 25

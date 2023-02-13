@@ -18,7 +18,7 @@
     @include text-input-fields.list{
         border: none;
         border-radius: 5px;
-        background-color: map.get(text.$main, 50);
+        background-color: map.get(text.$main, 200);
 
         ~.text-input__leading-icon svg path,
         ~.text-input__trailing-icon svg path{

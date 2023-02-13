@@ -1,5 +1,9 @@
 @use 'core/variants/flat';
+@use 'core/variants/ghost';
 
 .btn--flat--secondary{
     @include flat.init('secondary');
+}
+.btn--ghost--secondary{
+    @include ghost.init('secondary');
 }

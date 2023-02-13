@@ -12,17 +12,20 @@
                     Spark your productivity with a tasty to-do list!
                 </p>
             </div>
-            <LoginForm />
+            <LoginForm v-if="false" />
+            <SignupForm />
         </div>
     </div>
 </template>
 
 <script>
 import LoginForm from './Partials/LoginForm';
+import SignupForm from './Partials/SignupForm';
 
 export default {
     components: {
         LoginForm,
+        SignupForm,
     },
 };
 </script>
