@@ -1,0 +1,5 @@
+@use 'core/variants/faded';
+
+.text-input--faded--secondary{
+    @include faded.init('secondary');
+}

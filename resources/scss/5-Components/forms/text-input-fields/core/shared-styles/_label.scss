@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use '../../../../../1-Settings/css-properties/colors/text';
+@use '../../../../../1-Settings/css-properties/font-size/major-second';
+@use '../../../../../2-Tools/functions/convertions/pixel';
+
+@mixin init{
+    label{
+        display: inline-flex;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: pixel.toRem(4);
+        color: map.get(text.$main, 900);
+        font-size: pixel.toRem(map.get(major-second.$scale, 2));
+    }
+}

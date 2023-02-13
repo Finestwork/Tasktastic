@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use '../../../../../../scss/2-Tools/functions/convertions/pixel';
+@use '../../../../../../scss/2-Tools/mixins/forms/text-input-fields';
+
+$icon-size: 13;
+$left-pos: 10;
+$right-pos: 10;
+
+@mixin init {
+    .text-input__leading-icon {
+        left: #{$left-pos}px;
+    }
+    .text-input__trailing-icon {
+        right: #{$right-pos}px;
+    }
+
+    .text-input__leading-icon,
+    .text-input__trailing-icon {
+        position: absolute;
+        top: 50%;
+        width: #{$icon-size}px;
+        height: #{$icon-size}px;
+        transform: translateY(-50%);
+
+        svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .text-input__wrapper.add-leading-icon {
+        @include text-input-fields.list {
+            padding-left: pixel.toRem($icon-size + $left-pos + 7);
+        }
+    }
+    .text-input__wrapper.add-trailing-icon {
+        @include text-input-fields.list {
+            padding-right: pixel.toRem($icon-size + $left-pos + 7);
+        }
+    }
+}

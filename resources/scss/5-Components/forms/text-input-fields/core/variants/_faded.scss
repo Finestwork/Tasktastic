@@ -1,0 +1,63 @@
+@use 'sass:map';
+@use '../shared-styles/label';
+@use '../shared-styles/text-input';
+@use '../shared-styles/text-input-wrapper';
+@use '../shared-styles/icons';
+@use '../../../../../1-Settings/css-properties/colors/text';
+@use '../../../../../1-Settings/css-properties/colors/main';
+@use '../../../../../2-Tools/mixins/forms/text-input-fields';
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/primary' as box-shadow-primary;
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/secondary' as box-shadow-secondary;
+
+@mixin init($color-scheme){
+    @include text-input-wrapper.init;
+    @include label.init;
+    @include text-input.init;
+    @include icons.init;
+
+    @include text-input-fields.list{
+        border: none;
+        border-radius: 5px;
+        background-color: map.get(text.$main, 50);
+
+        ~.text-input__leading-icon svg path,
+        ~.text-input__trailing-icon svg path{
+            fill: map.get(text.$main, 300);
+        }
+    }
+
+    @if($color-scheme == 'primary') { @include primary-color-scheme; }
+    @if($color-scheme == 'secondary') { @include secondary-color-scheme; }
+}
+
+@mixin primary-color-scheme{
+    @include text-input-fields.list{
+        &:focus,
+        &:hover{
+            background-color: map.get(main.$primary, 100);
+
+            ~.text-input__leading-icon svg path,
+            ~.text-input__trailing-icon svg path{
+                fill: map.get(main.$primary, 500);
+            }
+        }
+        &:focus{
+            @include box-shadow-primary.lightness(light, md);
+        }
+    }
+}
+@mixin secondary-color-scheme{
+    @include text-input-fields.list{
+        &:focus,
+        &:hover{
+            background-color: map.get(main.$secondary, 100);
+            ~.text-input__leading-icon svg path,
+            ~.text-input__trailing-icon svg path{
+                fill: map.get(main.$secondary, 500);
+            }
+        }
+        &:focus{
+            @include box-shadow-secondary.lightness(light, md);
+        }
+    }
+}

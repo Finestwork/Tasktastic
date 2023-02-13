@@ -21,5 +21,4 @@ mix.disableNotifications();
 mix.sourceMaps(false, 'inline-source-map');
 
 mix.js('resources/js/index.js', 'public/assets/js').vue({version: 3});
-mix.sass('resources/scss/8-Page/main.scss', 'public/assets/css');
 

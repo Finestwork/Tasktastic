@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '../../../../../1-Settings/css-properties/colors/text';
+@use '../../../../../1-Settings/css-properties/font-size/major-second';
+@use '../../../../../2-Tools/mixins/forms/text-input-fields';
+@use '../../../../../2-Tools/functions/convertions/pixel';
+@use '../../../../../1-Settings/css-properties/box-shadow/transition' as box-shadow-transition;
+
+@mixin init{
+    @include text-input-fields.list{
+        font-family: inherit;
+        font-weight: 600;
+        width: 100%;
+        transition: box-shadow-transition.$transition-linear;
+        padding: pixel.toRem(10);
+        color: map.get(text.$main, 900);
+        font-size: pixel.toRem(map.get(major-second.$scale, 2));
+
+        &:focus{
+            outline: none;
+        }
+    }
+}
