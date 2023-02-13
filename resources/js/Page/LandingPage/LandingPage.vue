@@ -30,21 +30,24 @@ export default {
 
 // prettier-ignore
 .landing-page{
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('/assets/images/landing-page/bg.svg') no-repeat center;
+    background: url('/assets/images/landing-page/bg.svg') no-repeat fixed center;
     background-size: cover;
+    @include padding.vertical((
+        xsm: 10
+    ));
 
     .form{
         width: 95%;
-        max-width: 1000px;
+        max-width: 350px;
         background-color: white;
         border-radius: 15px;
         box-shadow: inset 0 -6px lighten(map.get(main.$primary, 200), 0);
         @include padding.all-sides((
-            xsm: [10, 10, 25, 10]
+            xsm: [25, 12, 35, 12]
         ));
 
         &__header{
