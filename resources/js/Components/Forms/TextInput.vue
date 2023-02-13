@@ -23,6 +23,9 @@
                 v-if="shouldDisplayTrailingIcon"
             ></span>
         </div>
+
+        <!-- Addons -->
+        <slot name="addons"></slot>
     </div>
 </template>
 
@@ -51,7 +54,7 @@ export default {
 
         defaultValue: {
             type: String,
-            required: true,
+            default: '',
         },
     },
     data() {

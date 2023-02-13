@@ -1,8 +1,14 @@
 <template>
     <div class="form__fields">
-        <TextInput :options="emailOptions" :defaultValue="''" />
-        <TextInput :options="passwordOptions" :defaultValue="''" />
-        <Button
+        <TextInput :options="emailOptions" />
+        <TextInput :options="passwordOptions">
+            <template #addons>
+                <button type="button" class="forgot-pw-btn">
+                    Forgot Password?
+                </button>
+            </template>
+        </TextInput>
+        <FlatButton
             :options="submitBtnOptions"
             :isLoading="isLoginBtnLoading"
             @click="login"
@@ -12,12 +18,12 @@
 
 <script>
 import TextInput from '../../../Components/Forms/TextInput';
-import Button from '../../../Components/Forms/Button';
+import FlatButton from '../../../Components/Forms/Button';
 
 export default {
     components: {
         TextInput,
-        Button,
+        FlatButton,
     },
     data() {
         return {

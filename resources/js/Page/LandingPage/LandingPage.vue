@@ -117,6 +117,27 @@ export default {
                     box-shadow: 0 2px rgba(map.get(main.$primary, 900), 0.4);
                 }
             }
+
+            .forgot-pw-btn{
+                font-weight: 600;
+                background-color: white;
+                font-family: inherit;
+                border: none;
+                cursor: pointer;
+                color: map.get(main.$primary, 900);
+                @include font-size.responsive((
+                    xsm: map.get(major-second.$scale, 2)
+                ));
+                &:focus{
+                    outline: none;
+                }
+
+                &:focus,
+                &:hover{
+                    text-decoration: underline;
+                    color: lighten(map.get(main.$primary, 900), 15%);
+                }
+            }
         }
     }
 }
