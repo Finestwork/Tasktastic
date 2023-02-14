@@ -12,8 +12,8 @@
                     Spark your productivity with a tasty to-do list!
                 </p>
             </div>
-            <LoginForm v-if="false" />
-            <SignupForm />
+            <LoginForm />
+            <SignupForm v-if="false" />
         </div>
     </div>
 </template>
@@ -34,6 +34,7 @@ export default {
 @use 'sass:map';
 @use '../../../scss/1-Settings/css-properties/font-size/major-second';
 @use '../../../scss/1-Settings/css-properties/colors/main';
+@use '../../../scss/1-Settings/css-properties/colors/text';
 @use '../../../scss/2-Tools/mixins/css-properties/padding';
 @use '../../../scss/2-Tools/mixins/css-properties/margin';
 @use '../../../scss/2-Tools/mixins/css-properties/font-size';

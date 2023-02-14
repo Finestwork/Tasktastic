@@ -24,7 +24,7 @@
 
         ~.text-input__leading-icon svg path,
         ~.text-input__trailing-icon svg path{
-            fill: map.get(text.$main, 300);
+            fill: map.get(text.$main, 400);
         }
     }
 

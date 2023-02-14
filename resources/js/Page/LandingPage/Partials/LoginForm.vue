@@ -1,10 +1,10 @@
 <template>
-    <form class="login-form">
+    <form class="form login-form">
         <div class="form__fields">
             <TextInput :options="emailOptions" />
             <TextInput :options="passwordOptions">
                 <template #addons>
-                    <button type="button" class="forgot-pw-btn">
+                    <button type="button" class="form__forgot-pw-btn">
                         Forgot Password?
                     </button>
                 </template>
@@ -15,7 +15,6 @@
                 @click="login"
             />
         </div>
-
         <p class="form__no-account">
             Not registered yet? Create an account <a href="#">here</a>
         </p>
@@ -94,53 +93,55 @@ export default {
 @use '../../../../scss/2-Tools/mixins/css-properties/margin';
 
 // prettier-ignore
-.login-form{
-    &__fields{
-        @include margin.top((
-            xsm: 25
-        ));
-
-        .text-input--faded--primary{
+.login-form.form{
+    .form{
+        &__fields{
             @include margin.top((
-                xsm: 15
+                xsm: 25
             ));
-            &:last-of-type{
-                margin-bottom: 0;
+
+            .text-input--faded--primary{
+                @include margin.top((
+                    xsm: 15
+                ));
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+            }
+
+            .btn--flat--primary{
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                max-width: 150px;
+                margin-left: auto;
+                margin-right: auto;
+                transition: all .15s ease-in-out;
+                background-color: map.get(main.$primary, 900);
+                box-shadow: 0 6px rgba(map.get(main.$primary, 900), 0.4);
+                @include padding.vertical((
+                    xsm: 15
+                ));
+                @include margin.top((
+                    xsm: 60,
+                    md: 35
+                ));
+                &:hover{
+                    background-color: lighten(map.get(main.$primary, 900), 5%);
+                }
+
+                &.btn--loading{
+                    background-color: rgba(map.get(main.$primary, 900), 0.3);
+                }
+
+                &:focus,
+                &.btn--loading{
+                    transform: translateY(4px);
+                    box-shadow: 0 2px rgba(map.get(main.$primary, 900), 0.4);
+                }
             }
         }
-
-        .btn--flat--primary{
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            max-width: 150px;
-            margin-left: auto;
-            margin-right: auto;
-            transition: all .15s ease-in-out;
-            background-color: map.get(main.$primary, 900);
-            box-shadow: 0 6px rgba(map.get(main.$primary, 900), 0.4);
-            @include padding.vertical((
-                xsm: 15
-            ));
-            @include margin.top((
-                xsm: 35
-            ));
-            &:hover{
-                background-color: lighten(map.get(main.$primary, 900), 5%);
-            }
-
-            &.btn--loading{
-                background-color: rgba(map.get(main.$primary, 900), 0.3);
-            }
-
-            &:focus,
-            &.btn--loading{
-                transform: translateY(4px);
-                box-shadow: 0 2px rgba(map.get(main.$primary, 900), 0.4);
-            }
-        }
-
-        .forgot-pw-btn{
+        &__forgot-pw-btn{
             font-weight: 600;
             background-color: white;
             font-family: inherit;
@@ -148,7 +149,7 @@ export default {
             cursor: pointer;
             color: map.get(main.$primary, 900);
             @include font-size.responsive((
-                xsm: map.get(major-second.$scale, 2)
+                xsm: map.get(major-second.$scale, 2) - 1
             ));
             &:focus{
                 outline: none;
@@ -160,25 +161,25 @@ export default {
                 color: lighten(map.get(main.$primary, 900), 15%);
             }
         }
-    }
-    &__no-account{
-        font-weight: 500;
-        color: map.get(text.$main, 400);
-        @include margin.top((
-            xsm: 30
-        ));
-        @include font-size.responsive((
-            xsm: map.get(major-second.$scale, 2)
-        ));
+        &__no-account{
+            font-weight: 500;
+            color: map.get(text.$main, 900);
+            @include margin.top((
+                xsm: 30
+            ));
+            @include font-size.responsive((
+                xsm: map.get(major-second.$scale, 2)
+            ));
 
-        a{
-            color: map.get(main.$primary, 500);
-            &:focus{
-                outline: none;
-                text-decoration: underline;
-            }
-            &:hover{
-                color: darken(map.get(main.$primary, 500), 15%);
+            a{
+                color: map.get(main.$primary, 500);
+                &:focus{
+                    outline: none;
+                    text-decoration: underline;
+                }
+                &:hover{
+                    color: darken(map.get(main.$primary, 500), 15%);
+                }
             }
         }
     }
