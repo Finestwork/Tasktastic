@@ -1,7 +1,7 @@
 <template>
     <div class="landing-page">
-        <div class="forms">
-            <div class="header">
+        <div class="forms" ref="formWrapper">
+            <div class="header" ref="formHeader">
                 <span class="header__logo">
                     <img
                         src="/assets/images/logos/logo.svg"
@@ -12,20 +12,83 @@
                     Spark your productivity with a tasty to-do list!
                 </p>
             </div>
-            <LoginForm />
-            <SignupForm v-if="false" />
+            <transition
+                @beforeEnter="onBeforeEnter"
+                @enter="onEnter"
+                @beforeLeave="onBeforeLeave"
+                @leave="onLeave"
+            >
+                <LoginPage v-if="shouldDisplayLoginPage" />
+                <SignupPage v-else-if="shouldDisplaySignupPage" />
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
-import LoginForm from './Partials/LoginForm';
-import SignupForm from './Partials/SignupForm';
+import LoginPage from './Partials/LoginPage';
+import SignupPage from './Partials/SignupPage';
+
+// NPM
+import anime from 'animejs';
+import NodeHelpers from '../../Helpers/TypeHelpers/NodeHelpers';
 
 export default {
     components: {
-        LoginForm,
-        SignupForm,
+        LoginPage,
+        SignupPage,
+    },
+    data() {
+        return {
+            animationId: null,
+        };
+    },
+    methods: {
+        onBeforeEnter(el) {
+            Object.assign(el.style, {
+                opacity: '0',
+                transform: 'scale(0)',
+                display: 'none',
+            });
+        },
+        onEnter(el, done) {
+            this.animationId.finished.then(() => {
+                el.style.display = null;
+
+                anime({
+                    targets: el,
+                    easing: 'easeOutQuint',
+                    duration: 500,
+                    opacity: 1,
+                    scale: 1,
+                    complete: () => done(),
+                });
+            });
+        },
+        onBeforeLeave(el) {
+            Object.assign(el.style, {
+                opacity: '1',
+                transform: 'scale(1)',
+            });
+        },
+        onLeave(el, done) {
+            this.animationId = anime({
+                targets: el,
+                easing: 'easeOutQuint',
+                duration: 500,
+                opacity: 0,
+                scale: 0,
+                complete: () => done(),
+            });
+        },
+    },
+    computed: {
+        shouldDisplayLoginPage() {
+            return this.$route.name === 'LoginPage';
+        },
+        shouldDisplaySignupPage() {
+            return this.$route.name === 'SignupPage';
+        },
     },
 };
 </script>
@@ -57,6 +120,8 @@ export default {
         max-width: 450px;
         background-color: white;
         border-radius: 15px;
+        overflow: hidden;
+        position: relative;
         box-shadow: inset 0 -6px lighten(map.get(main.$primary, 200), 0);
         @include padding.all-sides((
             xsm: [25, 12, 20, 12]

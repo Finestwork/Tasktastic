@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from "./Page/LandingPage/LandingPage";
-import Page1 from "./Page/Page1/Page1";
+import LandingPage from './Page/LandingPage/LandingPage';
 
 const routes = [
     {
@@ -9,9 +8,14 @@ const routes = [
         component: LandingPage,
     },
     {
-        path: '/page-1',
-        name: 'Page1',
-        component: Page1,
+        path: '/login',
+        name: 'LoginPage',
+        component: LandingPage,
+    },
+    {
+        path: '/signup',
+        name: 'SignupPage',
+        component: LandingPage,
     },
 ];
 
