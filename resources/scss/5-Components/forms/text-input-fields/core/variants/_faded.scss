@@ -3,6 +3,7 @@
 @use '../shared-styles/text-input';
 @use '../shared-styles/text-input-wrapper';
 @use '../shared-styles/icons';
+@use '../shared-styles/error-list';
 @use '../../../../../1-Settings/css-properties/colors/text';
 @use '../../../../../1-Settings/css-properties/colors/main';
 @use '../../../../../2-Tools/mixins/forms/text-input-fields';
@@ -14,6 +15,7 @@
     @include label.init;
     @include text-input.init;
     @include icons.init;
+    @include error-list.init;
 
     @include text-input-fields.list{
         border: none;

@@ -5,8 +5,8 @@
         <TextInput :options="firstNameOptions" />
         <TextInput :options="lastNameOptions" />
         <TextInput :options="emailOptions" />
-        <TextInput :options="passwordOptions" />
-        <TextInput :options="confirmPasswordOptions" />
+        <TextInput ref="password" :options="passwordOptions" />
+        <TextInput ref="confirmPassword" :options="confirmPasswordOptions" />
         <FlatButton class="form__register-btn" :options="submitBtnOptions" />
     </div>
 </template>
@@ -41,6 +41,9 @@ export default {
                     placeholder: 'Place your first name here',
                     id: 'signupFirstNameTxtInput',
                 },
+                validations: {
+                    required: true,
+                },
             },
             lastNameOptions: {
                 colorScheme: 'primary',
@@ -52,6 +55,9 @@ export default {
                     type: 'text',
                     placeholder: 'Place your last name here',
                     id: 'signupLastNameTxtInput',
+                },
+                validations: {
+                    required: true,
                 },
             },
             emailOptions: {
@@ -66,6 +72,10 @@ export default {
                     id: 'signupEmailTxtInput',
                     autocomplete: false,
                 },
+                validations: {
+                    required: true,
+                    email: true,
+                },
             },
             passwordOptions: {
                 colorScheme: 'primary',
@@ -78,6 +88,14 @@ export default {
                     placeholder: 'Place your password here',
                     id: 'signupPasswordTxtInput',
                 },
+                validations: {
+                    required: true,
+                    min: 8,
+                    sameWith: {
+                        element: '#signupConfirmPasswordTxtInput',
+                        fieldName: 'confirm password',
+                    },
+                },
             },
             confirmPasswordOptions: {
                 colorScheme: 'primary',
@@ -89,6 +107,14 @@ export default {
                     type: 'password',
                     placeholder: 'Confirm your password here',
                     id: 'signupConfirmPasswordTxtInput',
+                },
+                validations: {
+                    required: true,
+                    min: 8,
+                    sameWith: {
+                        element: '#signupPasswordTxtInput',
+                        fieldName: 'password',
+                    },
                 },
             },
             submitBtnOptions: {
