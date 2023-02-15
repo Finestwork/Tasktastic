@@ -1,8 +1,13 @@
 <template>
-    <form class="form login-form">
+    <form class="form login-form" @submit.prevent="login">
+        <AlertList
+            :options="alertListOptions"
+            :items="alertListItems"
+            v-if="alertListItems.length !== 0"
+        />
         <div class="form__fields">
-            <TextInput :options="emailOptions" />
-            <TextInput :options="passwordOptions">
+            <TextInput ref="email" :options="emailOptions" />
+            <TextInput ref="password" :options="passwordOptions">
                 <template #addons>
                     <button type="button" class="form__forgot-pw-btn">
                         Forgot Password?
@@ -12,7 +17,6 @@
             <FlatButton
                 :options="submitBtnOptions"
                 :isLoading="isLoginBtnLoading"
-                @click="login"
             />
         </div>
         <p class="form__no-account">
@@ -25,14 +29,23 @@
 <script>
 import TextInput from '../../../../../Components/Forms/TextInput';
 import FlatButton from '../../../../../Components/Forms/Button';
+import AlertList from '../../../../../Components/Alerts/Inline/List';
+
+// Helpers
+import Auth from '../../../../../Helpers/APIs/Auth';
 
 export default {
     components: {
         TextInput,
         FlatButton,
+        AlertList,
     },
     data() {
         return {
+            alertListOptions: {
+                colorScheme: 'danger',
+                variant: 'outline',
+            },
             emailOptions: {
                 colorScheme: 'primary',
                 variant: 'faded',
@@ -66,15 +79,50 @@ export default {
                 colorScheme: 'primary',
                 variant: 'flat',
                 btnSettings: {
+                    type: 'submit',
                     text: 'Login',
                 },
             },
             isLoginBtnLoading: false,
+            alertListItems: [],
         };
     },
     methods: {
         login() {
             this.isLoginBtnLoading = true;
+            const EMAIL = this.$refs.email.textInputValue;
+            const PASSWORD = this.$refs.password.textInputValue;
+
+            // Functions to handle the request
+            const handleResult = (res) => {
+                this.isLoginBtnLoading = false;
+                const DATA = res.data;
+
+                if (Object.keys(DATA).length !== 0) {
+                    this.$store.commit('setUserInfo', DATA);
+                    this.$router.push({ name: 'Personal' });
+                }
+            };
+            const handleErr = (err) => {
+                this.isLoginBtnLoading = false;
+
+                if (!err.hasOwnProperty('response')) return;
+                this.alertListItems = [];
+                const ERROR = err.response.data.errors;
+
+                Object.keys(ERROR).forEach((errorProp) => {
+                    const ERROR_ITEM = ERROR[errorProp][0];
+                    this.alertListItems.push(`• ${ERROR_ITEM}`);
+                });
+            };
+
+            // Send the login request
+            Auth.login({
+                email: EMAIL,
+                password: PASSWORD,
+            })
+                .then(handleResult)
+                .catch(handleErr);
         },
     },
 };
@@ -101,11 +149,13 @@ export default {
                 @include margin.top((
                     xsm: 15
                 ));
+                &:first-of-type{
+                    margin-top: 0;
+                }
                 &:last-of-type{
                     margin-bottom: 0;
                 }
             }
-
             .btn--flat--primary{
                 display: flex;
                 justify-content: center;
@@ -177,6 +227,20 @@ export default {
                 &:hover{
                     color: darken(map.get(main.$primary, 500), 15%);
                 }
+            }
+        }
+    }
+    .inline-alert--list--outline--danger{
+        @include margin.bottom((
+            xsm: 15
+        ));
+
+        li{
+            @include margin.bottom((
+                xsm: 4
+            ));
+            &:last-of-type{
+                margin-bottom: 0;
             }
         }
     }

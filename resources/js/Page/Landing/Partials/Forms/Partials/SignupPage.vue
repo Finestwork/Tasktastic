@@ -138,7 +138,6 @@ export default {
             isSubmitBtnLoading: false,
         };
     },
-    emits: ['successfullyRegistered'],
     methods: {
         goToLoginPage() {
             this.$router.push({ name: 'LoginPage' });
@@ -155,11 +154,8 @@ export default {
             const handleResult = (res) => {
                 const DATA = res.data;
 
-                if (Object.keys(DATA).length !== 0) {
-                    this.$store.commit('setUserInfo', DATA);
-                }
-
-                this.$emit('successfullyRegistered');
+                this.$store.commit('setUserInfo', DATA);
+                this.$router.push({ name: 'Personal' });
             };
             const handleError = (err) => {
                 console.log(err);

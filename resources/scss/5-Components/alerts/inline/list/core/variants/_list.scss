@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use '../shared-styles/root';
+@use '../../../../../../1-Settings/css-properties/colors/safety';
+
+@mixin init($color-scheme){
+    @include root.init;
+
+    @if($color-scheme == 'danger') { @include danger-color-scheme; }
+}
+
+
+@mixin danger-color-scheme{
+    background-color: map.get(safety.$danger, 50);
+    border: 2px solid map.get(safety.$danger, 600);
+    color: map.get(safety.$danger, 600);
+}

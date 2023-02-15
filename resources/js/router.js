@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from './Page/Landing/LandingPage';
-import Dashboard from './Page/Dashboard/Dashboard';
+import Personal from './Page/Personal/Personal';
 
 const ENTRY_POINT_ROUTES = [
     {
@@ -22,9 +22,9 @@ const ENTRY_POINT_ROUTES = [
 
 const DASHBOARD_ROUTES = [
     {
-        name: 'Dashboard',
-        path: '/dashboard',
-        component: Dashboard,
+        name: 'Personal',
+        path: '/personal',
+        component: Personal,
     },
 ];
 

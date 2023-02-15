@@ -18,10 +18,7 @@
             @leave="onLeave"
         >
             <LoginPage v-if="shouldDisplayLoginPage" />
-            <SignupPage
-                v-else-if="shouldDisplaySignupPage"
-                @successfullyRegistered="successfullyRegistered"
-            />
+            <SignupPage v-else-if="shouldDisplaySignupPage" />
         </transition>
     </div>
 </template>
@@ -43,11 +40,7 @@ export default {
             animationId: null,
         };
     },
-    emits: ['successfullyRegistered'],
     methods: {
-        successfullyRegistered() {
-            this.$emit('successfullyRegistered');
-        },
         onBeforeEnter(el) {
             Object.assign(el.style, {
                 opacity: '0',

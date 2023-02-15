@@ -16,7 +16,7 @@
     background-color: white;
 
     @if($color-scheme == 'primary') { @include primary-color-scheme; }
-    @elseif($color-scheme == 'secondary') { @include secondary-color-scheme; }
+    @else if($color-scheme == 'secondary') { @include secondary-color-scheme; }
 }
 
 

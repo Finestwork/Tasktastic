@@ -1,0 +1,5 @@
+@use 'core/variants/list';
+
+.inline-alert--list--outline--danger{
+    @include list.init('danger');
+}

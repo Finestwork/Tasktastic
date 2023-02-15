@@ -35,7 +35,7 @@ class SignUpController extends Controller
                 'first_name' => request()->firstName,
                 'last_name' => request()->lastName,
                 'email' => request()->email,
-                'password' => request()->password,
+                'password' => encrypt(request()->password),
             ]);
 
        Auth::login($USER);

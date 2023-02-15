@@ -1,9 +1,6 @@
 <template>
     <div class="landing-page">
-        <Forms
-            @successfullyRegistered="successfullyRegistered"
-            v-if="shouldDisplayForms"
-        />
+        <Forms v-if="shouldDisplayForms" />
         <Error500 :options="error500Options" v-if="isError500" />
     </div>
 </template>
@@ -11,8 +8,6 @@
 <script>
 import Forms from './Partials/Forms/Forms';
 import Error500 from '../../Components/PageStates/Error';
-
-// Helpers
 import Auth from '../../Helpers/APIs/Auth';
 
 export default {
@@ -35,12 +30,18 @@ export default {
         };
     },
     mounted() {
+        if (this.$store.getters.hasUserInfo) {
+            this.$router.push({ name: 'Personal' });
+            return;
+        }
+
         // Functions to handle the result
         const handleResult = (res) => {
             const DATA = res.data;
 
             if (Object.keys(DATA).length !== 0) {
-                this.$router.push({ name: 'Dashboard' });
+                this.$store.commit('setUserInfo', DATA);
+                this.$router.push({ name: 'Personal' });
             } else {
                 this.shouldDisplayForms = true;
             }
@@ -51,11 +52,6 @@ export default {
 
         // Send the request to the server
         Auth.checkUser().then(handleResult).catch(handleErr);
-    },
-    methods: {
-        successfullyRegistered() {
-            this.shouldDisplayForms = false;
-        },
     },
 };
 </script>
