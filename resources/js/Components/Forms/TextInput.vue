@@ -29,7 +29,7 @@
         </div>
 
         <!-- Errors -->
-        <ul class="errors" v-if="shouldShowErrorList" v-auto-animate>
+        <ul class="errors" v-auto-animate>
             <li class="error__item" v-for="prop in errors" :key="prop">
                 {{ Object.values(prop)[0] }}
             </li>
@@ -97,9 +97,6 @@ export default {
 
             // A text input field with which the value of this component will be compared
             sameWithElement: null,
-
-            // Determine whether to display error list or not
-            shouldShowErrorList: false,
         };
     },
     mounted() {
@@ -159,10 +156,14 @@ export default {
             const IND = this.errors.findIndex((obj) =>
                 obj.hasOwnProperty(errorType)
             );
-            if (IND === -1)
-                this.errors.push({
-                    [errorType]: msg,
-                });
+            if (IND === -1) {
+                this.errors = [
+                    ...this.errors,
+                    {
+                        [errorType]: msg,
+                    },
+                ];
+            }
         },
 
         // Removes error to the array
@@ -311,17 +312,6 @@ export default {
                 this.options.inputSettings.hasOwnProperty('autocomplete') &&
                 this.options.inputSettings.autocomplete
             );
-        },
-    },
-    watch: {
-        errors(errors) {
-            if (errors.length === 0) {
-                setTimeout(() => {
-                    this.shouldShowErrorList = false;
-                });
-            } else {
-                this.shouldShowErrorList = true;
-            }
         },
     },
 };

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\LandingPageController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingPageController::class, 'index']);
-Route::get('/login', [LandingPageController::class, 'index']);
-Route::get('/signup', [LandingPageController::class, 'index']);
+Route::get('/', [LandingPageController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [LandingPageController::class, 'index'])->middleware('auth');
+
+Route::post('/check-user', [LandingPageController::class, 'loggedInUser']);
 
 require __DIR__.'/auth.php';

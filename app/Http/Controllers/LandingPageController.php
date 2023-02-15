@@ -10,4 +10,10 @@ class LandingPageController extends Controller
     {
         return view('landing');
     }
+
+    // Get the currently logged-in user
+    public function loggedInUser()
+    {
+        return response()->json(auth()->user());
+    }
 }
