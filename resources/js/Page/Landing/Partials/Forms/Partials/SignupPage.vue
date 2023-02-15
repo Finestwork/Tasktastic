@@ -152,10 +152,7 @@ export default {
                 confirmPassword: this.$refs.confirmPassword.textInputValue,
             };
             const handleResult = (res) => {
-                const DATA = res.data;
-
-                this.$store.commit('setUserInfo', DATA);
-                this.$router.push({ name: 'Personal' });
+                window.location = '/';
             };
             const handleError = (err) => {
                 console.log(err);

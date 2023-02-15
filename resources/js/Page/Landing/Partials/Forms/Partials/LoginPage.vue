@@ -99,8 +99,7 @@ export default {
                 const DATA = res.data;
 
                 if (Object.keys(DATA).length !== 0) {
-                    this.$store.commit('setUserInfo', DATA);
-                    this.$router.push({ name: 'Personal' });
+                    window.location = '/';
                 }
             };
             const handleErr = (err) => {
