@@ -1,62 +1,6 @@
 <template>
     <PageWrapper>
-        <div class="page-wrapper__main-content">
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-            <h2>Hello from main content</h2>
-        </div>
+        <div class="page-wrapper__main-content"></div>
     </PageWrapper>
 </template>
 
