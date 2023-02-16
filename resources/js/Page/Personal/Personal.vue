@@ -1,16 +1,20 @@
 <template>
-    <main class="main-content">
-        <Nav />
-    </main>
+    <PageWrapper>
+        <div class="page-wrapper__main-content">
+            <h2>Hello from main content</h2>
+        </div>
+    </PageWrapper>
 </template>
 
 <script>
-import Nav from './Partials/Nav/Nav';
+import PageWrapper from '../../Components/PageWrapper/PageWrapper';
+
+// Helpers
 import Auth from '../../Helpers/APIs/Auth';
 
 export default {
     components: {
-        Nav,
+        PageWrapper,
     },
     mounted() {
         this.fetchUser();
@@ -39,3 +43,15 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@use 'sass:map';
+
+.page-wrapper__main-content {
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+</style>
