@@ -2,6 +2,60 @@
     <PageWrapper>
         <div class="page-wrapper__main-content">
             <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
+            <h2>Hello from main content</h2>
         </div>
     </PageWrapper>
 </template>
@@ -45,13 +99,17 @@ export default {
 </script>
 
 <style lang="scss">
-@use 'sass:map';
+@use '../../../scss/2-Tools/mixins/css-properties/padding';
 
+// prettier-ignore
 .page-wrapper__main-content {
     background-color: white;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
+    @include padding.all-sides((
+        xsm: 25
+    ));
 }
 </style>
