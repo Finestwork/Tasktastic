@@ -39,9 +39,13 @@ import TypeChecker from '../../Helpers/Validators/TypeChecker';
 export default {
     props: {
         /**
-         * @options: {variant, colorScheme, leadingIcon, trailingIcon, loadingSettings}
+         * @options: {variant, colorScheme, btnSettings, leadingIcon, trailingIcon, loadingSettings}
          * @variant: 'flat'
          * @colorScheme: 'primary', 'secondary'
+         * @btnSettings: {
+         *     type: String,
+         *     text: String
+         * }
          * @leadingIcon: SVG wrapped in a String,
          * @trailingIcon: SVG wrapped in a String,
          * loadingSettings: {icon: JSON or lottie format, text: String}

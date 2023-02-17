@@ -38,6 +38,7 @@
         "animejs": "^3.2.1",
         "floating-vue": "^2.0.0-beta.20",
         "lottie-web": "^5.10.2",
+        "sortablejs": "^1.15.0",
         "validator": "^13.9.0",
         "vuex": "^4.0.2"
     }

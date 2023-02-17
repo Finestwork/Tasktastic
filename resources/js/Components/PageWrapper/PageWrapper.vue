@@ -290,6 +290,7 @@ export default {
         width: 100%;
         top: 0;
         left: 0;
+        z-index: 99;
         background-color: lighten(map.get(main.$primary, 50), 1.5%);
         @include padding.all-sides((
             xsm: [10],

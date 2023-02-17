@@ -1,11 +1,16 @@
 <template>
-    <PageWrapper>
-        <div class="page-wrapper__main-content"></div>
+    <PageWrapper class="personal-page">
+        <div class="page-wrapper__main-content">
+            <AddTaskButton />
+            <Tasks />
+        </div>
     </PageWrapper>
 </template>
 
 <script>
 import PageWrapper from '../../Components/PageWrapper/PageWrapper';
+import AddTaskButton from './Partials/AddTaskButton';
+import Tasks from './Partials/Tasks';
 
 // Helpers
 import Auth from '../../Helpers/APIs/Auth';
@@ -13,6 +18,8 @@ import Auth from '../../Helpers/APIs/Auth';
 export default {
     components: {
         PageWrapper,
+        AddTaskButton,
+        Tasks,
     },
     mounted() {
         this.fetchUser();
