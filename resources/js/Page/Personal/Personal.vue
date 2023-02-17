@@ -3,6 +3,9 @@
         <div class="page-wrapper__main-content">
             <AddTaskButton />
             <Tasks />
+            <Teleport to="body">
+                <AddModal />
+            </Teleport>
         </div>
     </PageWrapper>
 </template>
@@ -11,6 +14,7 @@
 import PageWrapper from '../../Components/PageWrapper/PageWrapper';
 import AddTaskButton from './Partials/AddTaskButton';
 import Tasks from './Partials/Tasks';
+import AddModal from './Partials/AddModal/AddModal';
 
 // Helpers
 import Auth from '../../Helpers/APIs/Auth';
@@ -20,6 +24,7 @@ export default {
         PageWrapper,
         AddTaskButton,
         Tasks,
+        AddModal,
     },
     mounted() {
         this.fetchUser();

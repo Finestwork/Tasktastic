@@ -1,0 +1,55 @@
+@use 'sass:map';
+@use '../../../../../1-Settings/css-properties/colors/text';
+@use '../../../../../1-Settings/css-properties/colors/main';
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/primary' as box-shadow-primary;
+@use '../../../../../2-Tools/mixins/css-properties/box-shadow/secondary' as box-shadow-secondary;
+@use '../shared-styles/text-area';
+@use '../shared-styles/label';
+@use '../shared-styles/error-list';
+
+@mixin init($color-scheme){
+    @include text-area.init;
+    @include label.init;
+    @include error-list.init;
+
+    textarea{
+        border: none;
+        border-radius: 5px;
+        background-color: map.get(text.$main, 200);
+    }
+
+    @if($color-scheme == 'primary') { @include primary-color-scheme; }
+    @else if ($color-scheme == 'secondary'){ @include secondary-color-scheme; }
+}
+
+@mixin primary-color-scheme{
+    textarea{
+        &:focus,
+        &:hover{
+            background-color: map.get(main.$primary, 100);
+
+            ~.text-input__leading-icon svg path,
+            ~.text-input__trailing-icon svg path{
+                fill: map.get(main.$primary, 500);
+            }
+        }
+        &:focus{
+            @include box-shadow-primary.lightness(light, md);
+        }
+    }
+}
+@mixin secondary-color-scheme{
+    textarea{
+        &:focus,
+        &:hover{
+            background-color: map.get(main.$secondary, 100);
+            ~.text-input__leading-icon svg path,
+            ~.text-input__trailing-icon svg path{
+                fill: map.get(main.$secondary, 500);
+            }
+        }
+        &:focus{
+            @include box-shadow-secondary.lightness(light, md);
+        }
+    }
+}

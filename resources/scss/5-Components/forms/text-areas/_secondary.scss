@@ -1,0 +1,5 @@
+@use 'core/variants/faded';
+
+.text-area--faded--secondary{
+    @include faded.init('secondary');
+}

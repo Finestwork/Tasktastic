@@ -43,7 +43,7 @@
 <script>
 /*
  * TODO:
- *  [x] variant: 'faded', 'underlined', 'outlined'
+ *  [x] variant: 'flat', 'underlined', 'outlined'
  * [x] error state
  * [x] disabled state
  */
@@ -59,7 +59,7 @@ export default {
     props: {
         /**
          * @options: {variant, colorScheme, inputSettings, labelSettings, leadingIcon, trailingIcon, validations}
-         * @variant: 'flat'
+         * @variant: 'faded'
          * @colorScheme: 'primary', 'secondary'
          * @inputSettings: {type: String, placeholder: String, id: String}
          * @labelSettings: {text: String}
