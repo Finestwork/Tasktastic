@@ -4,14 +4,26 @@
             <h3 class="header__title">Add To Do</h3>
 
             <div class="header__controls">
-                <button type="button" class="control__cancel">Cancel</button>
-                <button type="button" class="control__save">Save</button>
+                <FlatButton
+                    class="control__cancel"
+                    :options="cancelBtnOptions"
+                    @click="cancelAddingTask"
+                />
+                <FlatButton
+                    class="control__save"
+                    :options="saveBtnOptions"
+                    :isLoading="isSaveBtnLoading"
+                    @click="saveTask"
+                />
             </div>
         </div>
 
         <div class="header__forms">
-            <TextInput :options="titleTxtInputOptions" />
-            <TextArea :options="descriptionTxtInputOptions" />
+            <TextInput ref="titleInput" :options="titleTxtInputOptions" />
+            <TextArea
+                ref="descriptionInput"
+                :options="descriptionTxtInputOptions"
+            />
         </div>
     </div>
 </template>
@@ -19,11 +31,23 @@
 <script>
 import TextInput from '../../../../../Components/Forms/TextInput';
 import TextArea from '../../../../../Components/Forms/TextArea';
+import FlatButton from '../../../../../Components/Forms/Button';
 
 export default {
     components: {
         TextInput,
         TextArea,
+        FlatButton,
+    },
+    props: {
+        isSaveBtnLoading: {
+            type: Boolean,
+            required: true,
+        },
+        clearForms: {
+            type: Boolean,
+            required: true,
+        },
     },
     data() {
         return {
@@ -38,9 +62,6 @@ export default {
                     id: 'addModalTitle',
                     placeholder: 'Place task title here',
                 },
-                validations: {
-                    required: true,
-                },
             },
             descriptionTxtInputOptions: {
                 colorScheme: 'primary',
@@ -52,11 +73,46 @@ export default {
                     id: 'addModalDescription',
                     placeholder: 'Add description here',
                 },
-                validations: {
-                    required: true,
+            },
+            cancelBtnOptions: {
+                colorScheme: 'primary',
+                variant: 'ghost',
+                btnSettings: {
+                    text: 'Cancel',
                 },
             },
+            saveBtnOptions: {
+                colorScheme: 'primary',
+                variant: 'flat',
+                btnSettings: {
+                    text: 'Save',
+                },
+            },
+            taskTitle: '',
         };
+    },
+    emits: ['cancelAddingTask', 'saveTask'],
+    methods: {
+        cancelAddingTask() {
+            this.$emit('cancelAddingTask');
+        },
+        saveTask() {
+            const TITLE = this.$refs.titleInput.textInputValue;
+            const DESCRIPTION = this.$refs.descriptionInput.textInputValue;
+
+            this.$emit('saveTask', {
+                title: TITLE,
+                description: DESCRIPTION,
+            });
+        },
+    },
+    watch: {
+        clearForms(clearForms) {
+            if (clearForms) {
+                this.$refs.titleInput.textInputValue = '';
+                this.$refs.descriptionInput.textInputValue = '';
+            }
+        },
     },
 };
 </script>
@@ -89,41 +145,16 @@ export default {
             }
             &__controls{
                 .control__cancel{
-                    color: map.get(main.$primary, 500);
-                    background-color: transparent;
                     @include margin.right((
                         xsm: 7
                     ));
-                    &:focus,
-                    &:hover{
-                        background-color: map.get(main.$primary, 100);
-                    }
-                }
-                .control__save{
-                    color: white;
-                    background-color: map.get(main.$primary, 500);
-                    &:focus,
-                    &:hover{
-                        background-color: darken(map.get(main.$primary, 500), 5%);
-                    }
                 }
 
                 .control__cancel,
                 .control__save{
-                    font-weight: 600;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    border: none;
-                    font-family: inherit;
                     @include font-size.responsive((
                         xsm: map.get(major-second.$scale, 2)
                     ));
-                    @include padding.all-sides((
-                        xsm: 10
-                    ));
-                    &:focus{
-                        outline: none;
-                    }
                 }
             }
             &__forms{

@@ -2,13 +2,6 @@
     <div class="modal__checklist">
         <div class="checklist__header">
             <h4 class="header__title">Let's Get it Done</h4>
-            <button type="button" class="header__btn" @click="hideTodos">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                    <path
-                        d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
-                    />
-                </svg>
-            </button>
         </div>
 
         <div class="checklist__items" ref="todoItems">
@@ -37,6 +30,7 @@
                 </div>
             </div>
             <TextInput
+                ref="addTodoTxtInput"
                 :options="addItemsOptions"
                 class="add-todo-text-input"
                 @keydown="addTodo"
@@ -54,6 +48,12 @@ import anime from 'animejs';
 export default {
     components: {
         TextInput,
+    },
+    props: {
+        clearForms: {
+            type: Boolean,
+            required: true,
+        },
     },
     data() {
         return {
@@ -73,49 +73,30 @@ export default {
         };
     },
     methods: {
-        hideTodos() {
-            const baseAnimationFn = (animObj) => {
-                const ANIM_OBJ = Object.assign(
-                    {
-                        targets: this.$refs.todoItems,
-                        transition: 150,
-                        easing: 'easeOutExpo',
-                    },
-                    animObj
-                );
-                anime(ANIM_OBJ);
-            };
-
-            if (!this.areTodosHidden) {
-                baseAnimationFn({
-                    height: '0',
-                });
-            } else {
-                const HEIGHT = this.$refs.todoItems.scrollHeight;
-                baseAnimationFn({
-                    height: `${HEIGHT}px`,
-                    complete: () => {
-                        this.$refs.todoItems.style = null;
-                    },
-                });
-            }
-
-            this.areTodosHidden = !this.areTodosHidden;
-        },
         addTodo(e) {
             if (e.key !== 'Enter') return;
 
             const INPUT = e.target;
-            const VALUE = INPUT.value;
+            const VALUE = INPUT.value.trim();
             this.todos.push({ text: VALUE });
             INPUT.value = '';
-            INPUT.blur();
         },
         removeTodo(e) {
             const BTN = e.currentTarget;
             const IND = parseInt(BTN.parentElement.dataset.todoInd);
 
             this.todos.splice(IND, 1);
+        },
+    },
+    watch: {
+        clearForms(clearForms) {
+            if (clearForms) {
+                this.todos = [];
+                const ADD_TODO_TXT_INPUT =
+                    this.$refs.addTodoTxtInput.$refs.input;
+                ADD_TODO_TXT_INPUT.value = '';
+                ADD_TODO_TXT_INPUT.blur();
+            }
         },
     },
 };
@@ -152,31 +133,6 @@ export default {
                             xsm: map.get(major-second.$scale, 3)
                         ));
                     }
-                    &__btn{
-                        cursor: pointer;
-                        background-color: white;
-                        border-radius: 5px;
-                        border: none;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        @include width-and-height.set((
-                            xsm: (width: 20px, height: 20px)
-                        ));
-                        &:focus{
-                            outline: none;
-                        }
-                        &:focus,
-                        &:hover{
-                            background-color: map.get(text.$main, 200);
-                        }
-                        svg{
-                            display: block;
-                            width: 100%;
-                            height: 100%;
-                            fill: map.get(text.$main, 500);
-                        }
-                    }
                 }
             }
             &__items{
@@ -198,7 +154,7 @@ export default {
                                 xsm: [7, 35, 7, 7]
                             ));
                             @include font-size.responsive((
-                                xsm: map.get(major-second.$scale, 3)
+                                xsm: map.get(major-second.$scale, 2)
                             ));
                             &:focus{
                                 outline: none;

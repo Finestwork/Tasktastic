@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '../../../../../../1-Settings/css-properties/colors/safety';
+@use '../shared-styles/root-wrapper';
+
+@mixin init($color-scheme){
+    @include root-wrapper.init;
+    color: white;
+
+    @if($color-scheme == 'success'){ @include success-color-scheme; }
+    @else if($color-scheme == 'danger'){ @include danger-color-scheme; }
+}
+
+@mixin success-color-scheme{
+    background-color: map.get(safety.$success, 600);
+}
+
+@mixin danger-color-scheme{
+    background-color: map.get(safety.$danger, 500);
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal">
+    <div class="modal" v-if="showModal">
         <span class="modal__bg"></span>
         <div class="modal__main-content-wrapper">
             <div class="modal__main-content">

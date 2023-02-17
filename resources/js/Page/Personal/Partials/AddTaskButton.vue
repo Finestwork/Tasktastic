@@ -1,5 +1,9 @@
 <template>
-    <Button :options="addTaskBtn" class="add-task-btn"></Button>
+    <Button
+        :options="addTaskBtn"
+        class="add-task-btn"
+        @click="showAddTaskModal"
+    />
 </template>
 
 <script>
@@ -19,6 +23,12 @@ export default {
                 },
             },
         };
+    },
+    emits: ['showAddTaskModal'],
+    methods: {
+        showAddTaskModal() {
+            this.$emit('showAddTaskModal');
+        },
     },
 };
 </script>

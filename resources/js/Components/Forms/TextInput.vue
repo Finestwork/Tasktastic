@@ -12,6 +12,7 @@
                 :id="options.inputSettings.id"
                 :autocomplete="hasAutoComplete ? null : 'off'"
                 v-model="textInputValue"
+                @input="onInput"
                 @blur="onBlur"
                 @keyup="onKeyup"
                 @keydown="onKeydown"
@@ -180,6 +181,10 @@ export default {
          * Emits
          * ======================
          */
+
+        onInput() {
+            this.$emit('input', this.textInputValue);
+        },
 
         onBlur(e) {
             this.runValidation();

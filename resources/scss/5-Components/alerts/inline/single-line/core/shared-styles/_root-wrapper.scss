@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use '../../../../../../1-Settings/css-properties/font-size/major-second';
+@use '../../../../../../2-Tools/functions/convertions/pixel';
+
+@mixin init{
+    border-radius: 5px;
+    font-weight: 600;
+    padding: pixel.toRem(7) pixel.toRem(10);
+    font-size: pixel.toRem(map.get(major-second.$scale, 3));
+}

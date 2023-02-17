@@ -226,7 +226,6 @@ export default {
     },
     computed: {
         getRootWrapperClass() {
-            console.log(this.options);
             let baseClass = `text-area--${this.options.variant}--${this.options.colorScheme}`;
 
             if (this.errors.length !== 0) baseClass += ' form--error';

@@ -1,10 +1,13 @@
 <template>
     <PageWrapper class="personal-page">
         <div class="page-wrapper__main-content">
-            <AddTaskButton />
+            <AddTaskButton @showAddTaskModal="showAddTaskModal" />
             <Tasks />
             <Teleport to="body">
-                <AddModal />
+                <AddModal
+                    :showModal="canShowAddTaskModal"
+                    @cancelAddingTask="hideAddTaskModal"
+                />
             </Teleport>
         </div>
     </PageWrapper>
@@ -25,6 +28,11 @@ export default {
         AddTaskButton,
         Tasks,
         AddModal,
+    },
+    data() {
+        return {
+            canShowAddTaskModal: false,
+        };
     },
     mounted() {
         this.fetchUser();
@@ -49,6 +57,12 @@ export default {
 
             // Send the request to the server
             Auth.checkUser().then(handleResult).catch(handleErr);
+        },
+        showAddTaskModal() {
+            this.canShowAddTaskModal = true;
+        },
+        hideAddTaskModal() {
+            this.canShowAddTaskModal = false;
         },
     },
 };

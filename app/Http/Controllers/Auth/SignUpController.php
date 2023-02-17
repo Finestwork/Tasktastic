@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers\SessionHelper;
 use App\Http\Controllers\Controller;
-use App\Mail\EmailVerification;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
