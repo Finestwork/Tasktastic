@@ -3,13 +3,13 @@
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">Started</h2>
             <div ref="startedWrapper">
-                <TaskCard v-for="task in test" :task="task" />
+                <TaskCard v-for="task in getStartedTasks" :task="task" />
             </div>
         </section>
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">In Progress</h2>
             <div ref="inProgressWrapper">
-                <TaskCard v-for="task in test" :task="task" />
+                <!--                <TaskCard v-for="task in test" :task="task" />-->
             </div>
         </section>
         <section class="col-xsm-12 col-lg-4">
@@ -35,80 +35,45 @@ export default {
                 forceFallback: true,
                 animation: 250,
             },
-            test: [
-                {
-                    id: 12,
-                    title: 'Entitled 1',
-                    description: 'This is a description',
-                },
-                {
-                    id: 14,
-                    title: 'Entitled 2',
-                    description: 'This is a description',
-                },
-                {
-                    id: 15,
-                    title: 'Entitled 3',
-                    description: 'This is a description',
-                },
-                {
-                    id: 16,
-                    title: 'Entitled 4',
-                    description: 'This is a description',
-                },
-                {
-                    id: 17,
-                    title: 'Entitled 5',
-                    description: 'This is a description',
-                },
-                {
-                    id: 1,
-                    title: 'Entitled 6',
-                    description: 'This is a description',
-                },
-                {
-                    id: 2,
-                    title: 'Entitled 7',
-                    description: 'This is a description',
-                },
-                {
-                    id: 3,
-                    title: 'Entitled 8',
-                    description: 'This is a description',
-                },
-                {
-                    id: 4,
-                    title: 'Entitled 9',
-                    description: 'This is a description',
-                },
-                {
-                    id: 5,
-                    title: 'Entitled 10',
-                    description: 'This is a description',
-                },
-            ],
             drag: false,
         };
     },
     mounted() {
-        this.initSort();
+        this.fetchTasks();
     },
     methods: {
-        initSort() {
-            Sortable.create(this.$refs.startedWrapper, {
-                group: {
-                    name: 'started',
-                    put: ['in-progress'],
-                },
-                ...this.sortableOptions,
-            });
-            Sortable.create(this.$refs.inProgressWrapper, {
-                group: {
-                    name: 'in-progress',
-                    put: ['started'],
-                },
-                ...this.sortableOptions,
-            });
+        fetchTasks() {
+            // Functions to handle the request
+            const handleResult = () => {
+                Sortable.create(this.$refs.startedWrapper, {
+                    group: {
+                        name: 'started',
+                        put: ['in-progress'],
+                    },
+                    ...this.sortableOptions,
+                });
+                Sortable.create(this.$refs.inProgressWrapper, {
+                    group: {
+                        name: 'in-progress',
+                        put: ['started'],
+                    },
+                    ...this.sortableOptions,
+                });
+            };
+            const handleError = (err) => {
+                console.log(err);
+            };
+
+            // Send request to the server
+            this.$store
+                .dispatch('PersonalTaskModule/fetchAll')
+                .then(handleResult)
+                .catch(handleError);
+        },
+    },
+    computed: {
+        getStartedTasks() {
+            return this.$store.state['PersonalTaskModule'].started;
         },
     },
 };
@@ -126,6 +91,9 @@ export default {
 
 // prettier-ignore
 .personal-page .tasks {
+    @include padding.bottom((
+        xsm: 45
+    ));
     .task {
         &__row-title {
             font-weight: 700;

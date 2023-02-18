@@ -120,7 +120,10 @@ export default {
             };
 
             // Send the request to the server
-            Todo.create(DATA).then(handleResult).catch(handleErr);
+            this.$store
+                .dispatch('PersonalTaskModule/create', DATA)
+                .then(handleResult)
+                .catch(handleErr);
         },
     },
 };

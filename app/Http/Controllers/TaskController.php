@@ -25,7 +25,7 @@ class TaskController extends Controller
         ]);
 
         $TITLE = request()->title;
-        $DESCRIPTION = request()->title;
+        $DESCRIPTION = request()->description;
         $PROGRESS_ID = 1;
 
         $TODO = Todo::query()->create([
