@@ -15,5 +15,5 @@
 }
 
 @mixin danger-color-scheme{
-    background-color: map.get(safety.$danger, 500);
+    background-color: map.get(safety.$danger, 600);
 }

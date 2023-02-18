@@ -9,6 +9,10 @@
             :options="successAlertOptions"
             v-if="shouldShowSuccessAlert"
         />
+        <AlertSingleLine
+            :options="errorAlertOptions"
+            v-if="shouldShowErrorAlert"
+        />
         <Header
             :isSaveBtnLoading="isSaveBtnLoading"
             :clearForms="clearForms"
@@ -50,10 +54,18 @@ export default {
                     text: 'You have successfully created a todo list!',
                 },
             },
+            errorAlertOptions: {
+                variant: 'flat',
+                colorScheme: 'danger',
+                alertSettings: {
+                    text: 'We apologize, but it appears that there was an issue with your task. Please try again later as we work to resolve the problem. Thank you for your understanding and patience.',
+                },
+            },
             errors: [],
             isSaveBtnLoading: false,
             clearForms: false,
             shouldShowSuccessAlert: false,
+            shouldShowErrorAlert: false,
         };
     },
     emits: ['cancelAddingTask'],
@@ -63,6 +75,7 @@ export default {
             this.isSaveBtnLoading = false;
             this.clearForms = false;
             this.shouldShowSuccessAlert = false;
+            this.shouldShowErrorAlert = false;
             this.$emit('cancelAddingTask');
         },
 
@@ -70,6 +83,7 @@ export default {
             this.isSaveBtnLoading = true;
             this.clearForms = false;
             this.shouldShowSuccessAlert = false;
+            this.shouldShowErrorAlert = false;
             this.errors = [];
 
             if (taskObj.title === '') {
@@ -102,6 +116,7 @@ export default {
             const handleErr = (err) => {
                 console.log(err);
                 this.isSaveBtnLoading = false;
+                this.shouldShowErrorAlert = true;
             };
 
             // Send the request to the server
@@ -112,8 +127,11 @@ export default {
 </script>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../../../../scss/1-Settings/css-properties/font-size/major-second';
 @use '../../../../../scss/2-Tools/mixins/css-properties/padding';
 @use '../../../../../scss/2-Tools/mixins/css-properties/margin';
+@use '../../../../../scss/2-Tools/mixins/css-properties/font-size';
 
 // prettier-ignore
 .add-todo-modal .modal{
@@ -131,7 +149,11 @@ export default {
             ));
         }
 
-        .inline-alert--list--flat--success{
+        .inline-alert--list--flat--success,
+        .inline-alert--list--flat--danger{
+            @include font-size.responsive((
+                xsm: map.get(major-second.$scale, 2)
+            ));
             @include margin.bottom((
                 xsm: 15
             ));

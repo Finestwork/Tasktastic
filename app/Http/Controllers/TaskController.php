@@ -24,10 +24,15 @@ class TaskController extends Controller
             'todos' => 'required|array',
         ]);
 
+        $TITLE = request()->title;
+        $DESCRIPTION = request()->title;
+        $PROGRESS_ID = 1;
+
         $TODO = Todo::query()->create([
             'user_id' => auth()->id(),
-            'title' => request()->title,
-            'description' => request()->description,
+            'title' => $TITLE,
+            'description' => $DESCRIPTION,
+            'progress_id' => $PROGRESS_ID
         ]);
 
         foreach(request()->todos as $todo){
@@ -39,7 +44,7 @@ class TaskController extends Controller
 
         $FORMATTED = Todo::query()
             ->where('id', $TODO->id)
-            ->with('checklists')
+            ->with('checklists', 'progress')
             ->get()
             ->first();
 
