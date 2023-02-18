@@ -19,7 +19,9 @@
 export default {
     props: {
         /**
-         * @options: {img}
+         * @options: {title, msg, img}
+         * @title: String
+         * @msg: String
          * @img: {src: String, alt: String}
          */
         options: {

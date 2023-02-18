@@ -1,0 +1,90 @@
+@use 'sass:map';
+@use '../../../scss/1-Settings/css-properties/colors/text';
+@use '../../../scss/1-Settings/css-properties/font-size/major-second';
+@use '../../../scss/2-Tools/functions/convertions/pixel';
+
+.loader--bouncing-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .loader{
+        &__animation{
+            display: block;
+            width: 48px;
+            height: 48px;
+            position: relative;
+            &::before{
+                content: '';
+                width: 48px;
+                height: 5px;
+                background: #f0808050;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                border-radius: 50%;
+                animation: bouncing-box-loader-shadow 0.5s linear infinite;
+            }
+            &::after{
+                content: '';
+                width: 100%;
+                height: 100%;
+                background: #f08080;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 4px;
+                animation: bouncing-box-loader 0.5s linear infinite;
+            }
+        }
+
+        &__title{
+            font-weight: 700;
+            color: map.get(text.$main, 900);
+            margin-top: pixel.toRem(45);
+            font-size: pixel.toRem(map.get(major-second.$scale, 4));
+        }
+        &__msg{
+            text-align: justify;
+            color: map.get(text.$main, 600);
+            font-size: pixel.toRem(map.get(major-second.$scale, 2));
+        }
+    }
+
+}
+
+@keyframes bouncing-box-loader {
+    15% {
+        border-bottom-right-radius: 3px;
+    }
+
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+
+    50% {
+        transform: translateY(18px) scale(1, .9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes bouncing-box-loader-shadow {
+
+    0%,
+    100% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.2, 1);
+    }
+}

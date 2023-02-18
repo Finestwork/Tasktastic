@@ -39,38 +39,23 @@ export default {
         };
     },
     mounted() {
-        this.fetchTasks();
+        Sortable.create(this.$refs.startedWrapper, {
+            group: {
+                name: 'started',
+                put: ['in-progress'],
+            },
+            ...this.sortableOptions,
+        });
+        Sortable.create(this.$refs.inProgressWrapper, {
+            group: {
+                name: 'in-progress',
+                put: ['started'],
+            },
+            ...this.sortableOptions,
+        });
     },
-    methods: {
-        fetchTasks() {
-            // Functions to handle the request
-            const handleResult = () => {
-                Sortable.create(this.$refs.startedWrapper, {
-                    group: {
-                        name: 'started',
-                        put: ['in-progress'],
-                    },
-                    ...this.sortableOptions,
-                });
-                Sortable.create(this.$refs.inProgressWrapper, {
-                    group: {
-                        name: 'in-progress',
-                        put: ['started'],
-                    },
-                    ...this.sortableOptions,
-                });
-            };
-            const handleError = (err) => {
-                console.log(err);
-            };
-
-            // Send request to the server
-            this.$store
-                .dispatch('PersonalTaskModule/fetchAll')
-                .then(handleResult)
-                .catch(handleError);
-        },
-    },
+    emits: ['failedToDisplayTasks', 'taskRetrieved'],
+    methods: {},
     computed: {
         getStartedTasks() {
             return this.$store.state['PersonalTaskModule'].started;
