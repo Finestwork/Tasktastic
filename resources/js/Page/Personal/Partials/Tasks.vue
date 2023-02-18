@@ -2,7 +2,7 @@
     <div class="row tasks">
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">Started</h2>
-            <div class="task_items" ref="startedWrapper" data-progress-id="1">
+            <div class="task__items" ref="startedWrapper" data-progress-id="1">
                 <TaskCard
                     v-for="task in getStartedTasks"
                     :task="task"
