@@ -82,15 +82,19 @@ export default {
             return REQUEST;
         },
 
-        // Udpate todo list progress
+        // Update todo list progress
         updateProgress(
             { commit },
-            { todoId, currentProgressId, previousProgressId }
+            { todoId, currentProgressId, previousProgressId },
+            axiosOptions = {}
         ) {
-            const REQUEST = Todo.updateProgress({
-                todoId,
-                progressId: currentProgressId,
-            });
+            const REQUEST = Todo.updateProgress(
+                {
+                    todoId,
+                    progressId: currentProgressId,
+                },
+                axiosOptions
+            );
 
             REQUEST.then(() => {
                 commit('updateProgressTask', {

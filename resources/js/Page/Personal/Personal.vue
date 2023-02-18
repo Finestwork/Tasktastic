@@ -103,7 +103,6 @@ export default {
             // Functions to handle the request
             const handleResult = () => {
                 this.canDisplayLoader = false;
-                console.log('ss');
             };
             const handleError = () => {
                 this.canDisplayLoader = false;

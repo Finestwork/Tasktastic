@@ -40,10 +40,18 @@
         </section>
         <span ref="placeholder" class="task__placeholder"></span>
     </div>
+
+    <Teleport to="body">
+        <LoadIndicators
+            :progressWidth="loadingIndicatorWidth"
+            @progressDone="resetProgressData"
+        />
+    </Teleport>
 </template>
 
 <script>
 import TaskCard from '../../../Components/TaskCard/TaskCard';
+import LoadIndicators from '../../../Components/Loaders/LoadIndicators';
 
 // NPM
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
@@ -51,15 +59,17 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 export default {
     components: {
         TaskCard,
+        LoadIndicators,
     },
     data() {
         return {
-            sortable: null,
             sortableOptions: {
                 forceFallback: true,
                 animation: 250,
             },
+            sortable: null,
             drag: false,
+            loadingIndicatorWidth: 0,
         };
     },
     mounted() {
@@ -80,7 +90,6 @@ export default {
     methods: {
         /*
          * TODO:
-         *  Loading State
          *  Error State
          */
         initSortable(wrapper, group) {
@@ -119,9 +128,21 @@ export default {
                     currentProgressId: CURRENT_PROGRESS_ID,
                     previousProgressId: PREVIOUS_PROGRESS_ID,
                 };
+                this.loadingIndicatorWidth = 20;
+
+                // Functions to handle the request
+                const handleRequest = () => {
+                    this.loadingIndicatorWidth = 100;
+                };
+                const handleError = () => {
+                    //
+                };
 
                 // Send request to the server
-                this.$store.dispatch('PersonalTaskModule/updateProgress', DATA);
+                this.$store
+                    .dispatch('PersonalTaskModule/updateProgress', DATA)
+                    .then(handleRequest)
+                    .catch(handleError);
             };
             const onMove = (ev, originalEvent) => {
                 const {
@@ -151,6 +172,9 @@ export default {
             };
 
             Sortable.create(wrapper, OPTIONS);
+        },
+        resetProgressData() {
+            this.loadingIndicatorWidth = 0;
         },
     },
     computed: {
@@ -219,5 +243,9 @@ export default {
             margin-bottom: 0;
         }
     }
+}
+
+.loader--load-indicator {
+    z-index: 999;
 }
 </style>
