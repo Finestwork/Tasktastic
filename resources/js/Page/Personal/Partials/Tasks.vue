@@ -15,6 +15,7 @@
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">Completed</h2>
         </section>
+        <span ref="placeholder" class="task__placeholder"></span>
     </div>
 </template>
 
@@ -39,12 +40,55 @@ export default {
         };
     },
     mounted() {
+        const onStart = (ev) => {
+            const IND = ev.oldIndex;
+            const PARENT = ev.target;
+            const TARGET = PARENT.children[IND];
+
+            const {
+                offsetHeight: HEIGHT,
+                offsetWidth: WIDTH,
+                offsetLeft: LEFT,
+                offsetTop: TOP,
+            } = TARGET;
+
+            Object.assign(this.$refs.placeholder.style, {
+                display: 'block',
+                height: `${HEIGHT}px`,
+                width: `${WIDTH}px`,
+                top: `${TOP}px`,
+                left: `${LEFT}px`,
+            });
+        };
+        const onEnd = (ev) => {
+            this.$refs.placeholder.style = null;
+        };
+        const onMove = (ev, originalEvent) => {
+            const {
+                offsetHeight: HEIGHT,
+                offsetWidth: WIDTH,
+                offsetLeft: LEFT,
+                offsetTop: TOP,
+            } = originalEvent.target;
+
+            Object.assign(this.$refs.placeholder.style, {
+                display: 'block',
+                height: `${HEIGHT}px`,
+                width: `${WIDTH}px`,
+                top: `${TOP}px`,
+                left: `${LEFT}px`,
+            });
+        };
+
         Sortable.create(this.$refs.startedWrapper, {
             group: {
                 name: 'started',
                 put: ['in-progress'],
             },
             ...this.sortableOptions,
+            onStart,
+            onEnd,
+            onMove,
         });
         Sortable.create(this.$refs.inProgressWrapper, {
             group: {
@@ -54,8 +98,6 @@ export default {
             ...this.sortableOptions,
         });
     },
-    emits: ['failedToDisplayTasks', 'taskRetrieved'],
-    methods: {},
     computed: {
         getStartedTasks() {
             return this.$store.state['PersonalTaskModule'].started;
@@ -76,6 +118,7 @@ export default {
 
 // prettier-ignore
 .personal-page .tasks {
+    position: relative;
     @include padding.bottom((
         xsm: 45
     ));
@@ -93,6 +136,13 @@ export default {
             @include font-size.responsive((
                 xsm: map.get(major-second.$scale, 3),
             ));
+        }
+        &__placeholder{
+            position: absolute;
+            transition: all .15s linear;
+            display: none;
+            border-radius: 15px;
+            background-color: map.get(text.$main, 200);
         }
     }
 

@@ -133,6 +133,14 @@ export default {
             ));
         }
     }
+
+    &.sortable-ghost{
+        opacity: 0;
+    }
+
+    &.sortable-fallback {
+        opacity: 1 !important
+    }
 }
 
 // prettier-ignore
@@ -158,7 +166,7 @@ export default {
         ));
         &:focus,
         &:hover{
-            background-color:map.get(text.$main, 100);
+            background-color: map.get(text.$main, 100);
         }
 
         &:focus{
