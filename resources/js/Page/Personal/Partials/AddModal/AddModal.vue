@@ -1,5 +1,5 @@
 <template>
-    <Modal class="add-todo-modal" :show-modal="showModal">
+    <Modal class="add-todo-modal" :showModal="showModal">
         <AlertList
             :items="errors"
             :options="{ colorScheme: 'danger', variant: 'outline' }"

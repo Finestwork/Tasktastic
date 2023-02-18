@@ -1,5 +1,5 @@
 <template>
-    <PageWrapper class="personal-page">
+    <PageWrapper class="personal-page" ref="pageWrapper">
         <div class="page-wrapper__main-content">
             <!-- Main Content -->
             <div v-if="shouldDisplayMainContent">
@@ -69,6 +69,10 @@ export default {
     },
     mounted() {
         this.fetchUser();
+
+        this.$nextTick(() => {
+            document.body.style.overflowY = 'hidden';
+        });
     },
     methods: {
         fetchUser() {
@@ -107,9 +111,11 @@ export default {
         },
         showAddTaskModal() {
             this.canShowAddTaskModal = true;
+            this.$refs.pageWrapper.$el.style.overflowY = 'hidden';
         },
         hideAddTaskModal() {
             this.canShowAddTaskModal = false;
+            this.$refs.pageWrapper.$el.style.overflowY = null;
         },
     },
     computed: {
@@ -132,6 +138,7 @@ export default {
 // prettier-ignore
 .personal-page .page-wrapper{
     &__main-content{
+        overflow-y: scroll;
         background-color: white;
         width: 100%;
         height: 100%;

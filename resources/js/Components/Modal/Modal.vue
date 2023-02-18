@@ -17,18 +17,6 @@ export default {
             required: true,
         },
     },
-    watch: {
-        showModal: {
-            handler(showModal) {
-                if (showModal) {
-                    document.body.style.overflowY = 'hidden';
-                } else {
-                    document.body.style.overflowY = null;
-                }
-            },
-            immediate: true,
-        },
-    },
 };
 </script>
 
