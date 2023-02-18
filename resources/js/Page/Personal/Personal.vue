@@ -76,7 +76,10 @@ export default {
     },
     methods: {
         fetchUser() {
-            if (this.$store.getters.hasUserInfo) return;
+            if (this.$store.getters.hasUserInfo) {
+                this.fetchAllTasks();
+                return;
+            }
 
             // Functions to handle the result
             const handleResult = (res) => {
@@ -84,20 +87,7 @@ export default {
 
                 if (Object.keys(DATA).length !== 0) {
                     this.$store.commit('setUserInfo', DATA);
-                    // Functions to handle the request
-                    const handleResult = () => {
-                        this.canDisplayLoader = false;
-                    };
-                    const handleError = () => {
-                        this.canDisplayLoader = false;
-                        this.canDisplayTaskError = true;
-                    };
-
-                    // Send request to the server
-                    this.$store
-                        .dispatch('PersonalTaskModule/fetchAll')
-                        .then(handleResult)
-                        .catch(handleError);
+                    this.fetchAllTasks();
                 } else {
                     this.$router.push({ name: 'LoginPage' });
                 }
@@ -108,6 +98,23 @@ export default {
 
             // Send the request to the server
             Auth.checkUser().then(handleResult).catch(handleErr);
+        },
+        fetchAllTasks() {
+            // Functions to handle the request
+            const handleResult = () => {
+                this.canDisplayLoader = false;
+                console.log('ss');
+            };
+            const handleError = () => {
+                this.canDisplayLoader = false;
+                this.canDisplayTaskError = true;
+            };
+
+            // Send request to the server
+            this.$store
+                .dispatch('PersonalTaskModule/fetchAll')
+                .then(handleResult)
+                .catch(handleError);
         },
         showAddTaskModal() {
             this.canShowAddTaskModal = true;
