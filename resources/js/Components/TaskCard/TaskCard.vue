@@ -56,6 +56,7 @@ export default {
     border-radius: 15px;
     background-color: white;
     position: relative;
+    cursor: pointer;
     box-shadow: 0 0 10px rgba(map.get(text.$main, 600), 0.1);
     @include padding.all-sides((
         xsm: 10
@@ -117,8 +118,8 @@ export default {
         &__tag{
             font-weight: 600;
             border-radius: 7px;
-            background-color: map.get(main.$secondary, 50);
-            color: map.get(main.$secondary, 400);
+            background-color: map.get(main.$primary, 50);
+            color: map.get(main.$primary, 400);
             @include font-size.responsive((
                 xsm: map.get(major-second.$scale, 1)
             ));
@@ -136,10 +137,13 @@ export default {
 
     &.sortable-ghost{
         opacity: 0;
+        > *{
+            cursor: grabbing !important;
+        }
     }
 
     &.sortable-fallback {
-        opacity: 1 !important
+        opacity: 1 !important;
     }
 }
 

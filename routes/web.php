@@ -11,5 +11,6 @@ Route::get('/personal', [LandingPageController::class, 'index'])->middleware('au
 Route::post('/check-user', [LandingPageController::class, 'loggedInUser']);
 Route::post('/todo/create', [TaskController::class, 'save']);
 Route::post('/todo/personal/all', [PersonalController::class, 'all']);
+Route::post('/todo/personal/update-progress', [PersonalController::class, 'updateProgress']);
 
 require __DIR__.'/auth.php';

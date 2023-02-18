@@ -9,6 +9,12 @@ export default class Todo {
         return axios.post('/todo/create', data, OPTIONS);
     }
 
+    // Update todo list progress
+    static updateProgress(data, options = {}) {
+        const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
+        return axios.post('/todo/personal/update-progress', data, OPTIONS);
+    }
+
     // Fetch all personal tasks
     static fetchAllPersonalTasks(options = {}) {
         const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);

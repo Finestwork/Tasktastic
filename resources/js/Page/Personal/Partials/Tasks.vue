@@ -2,18 +2,41 @@
     <div class="row tasks">
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">Started</h2>
-            <div ref="startedWrapper">
-                <TaskCard v-for="task in getStartedTasks" :task="task" />
+            <div class="task_items" ref="startedWrapper" data-progress-id="1">
+                <TaskCard
+                    v-for="task in getStartedTasks"
+                    :task="task"
+                    :data-todo-id="task.id"
+                />
             </div>
         </section>
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">In Progress</h2>
-            <div ref="inProgressWrapper">
-                <!--                <TaskCard v-for="task in test" :task="task" />-->
+            <div
+                class="task__items"
+                ref="inProgressWrapper"
+                data-progress-id="2"
+            >
+                <TaskCard
+                    v-for="task in getInProgressTasks"
+                    :task="task"
+                    :data-todo-id="task.id"
+                />
             </div>
         </section>
         <section class="col-xsm-12 col-lg-4">
             <h2 class="task__row-title">Completed</h2>
+            <div
+                ref="completedWrapper"
+                class="task__items"
+                data-progress-id="3"
+            >
+                <TaskCard
+                    v-for="task in getCompletedTasks"
+                    :task="task"
+                    :data-todo-id="task.id"
+                />
+            </div>
         </section>
         <span ref="placeholder" class="task__placeholder"></span>
     </div>
@@ -40,67 +63,105 @@ export default {
         };
     },
     mounted() {
-        const onStart = (ev) => {
-            const IND = ev.oldIndex;
-            const PARENT = ev.target;
-            const TARGET = PARENT.children[IND];
-
-            const {
-                offsetHeight: HEIGHT,
-                offsetWidth: WIDTH,
-                offsetLeft: LEFT,
-                offsetTop: TOP,
-            } = TARGET;
-
-            Object.assign(this.$refs.placeholder.style, {
-                display: 'block',
-                height: `${HEIGHT}px`,
-                width: `${WIDTH}px`,
-                top: `${TOP}px`,
-                left: `${LEFT}px`,
-            });
-        };
-        const onEnd = (ev) => {
-            this.$refs.placeholder.style = null;
-        };
-        const onMove = (ev, originalEvent) => {
-            const {
-                offsetHeight: HEIGHT,
-                offsetWidth: WIDTH,
-                offsetLeft: LEFT,
-                offsetTop: TOP,
-            } = originalEvent.target;
-
-            Object.assign(this.$refs.placeholder.style, {
-                display: 'block',
-                height: `${HEIGHT}px`,
-                width: `${WIDTH}px`,
-                top: `${TOP}px`,
-                left: `${LEFT}px`,
-            });
-        };
-
-        Sortable.create(this.$refs.startedWrapper, {
-            group: {
-                name: 'started',
-                put: ['in-progress'],
-            },
-            ...this.sortableOptions,
-            onStart,
-            onEnd,
-            onMove,
+        this.initSortable(this.$refs.startedWrapper, {
+            name: 'started',
+            put: ['in-progress', 'completed'],
         });
-        Sortable.create(this.$refs.inProgressWrapper, {
-            group: {
-                name: 'in-progress',
-                put: ['started'],
-            },
-            ...this.sortableOptions,
+        this.initSortable(this.$refs.inProgressWrapper, {
+            name: 'in-progress',
+            put: ['started', 'completed'],
         });
+        this.initSortable(this.$refs.completedWrapper, {
+            name: 'completed',
+            put: ['started', 'in-progress'],
+        });
+    },
+
+    methods: {
+        /*
+         * TODO:
+         *  Loading State
+         *  Error State
+         */
+        initSortable(wrapper, group) {
+            // Functions to handle group
+            const onStart = (ev) => {
+                const IND = ev.oldIndex;
+                const PARENT = ev.target;
+                const TARGET = PARENT.children[IND];
+
+                const {
+                    offsetHeight: HEIGHT,
+                    offsetWidth: WIDTH,
+                    offsetLeft: LEFT,
+                    offsetTop: TOP,
+                } = TARGET;
+
+                Object.assign(this.$refs.placeholder.style, {
+                    display: 'block',
+                    height: `${HEIGHT}px`,
+                    width: `${WIDTH}px`,
+                    top: `${TOP}px`,
+                    left: `${LEFT}px`,
+                });
+            };
+            const onEnd = () => {
+                this.$refs.placeholder.style = null;
+            };
+            const onAdd = (ev) => {
+                const TARGET_LIST = ev.to;
+                const PREVIOUS_LIST = ev.from;
+                const PREVIOUS_PROGRESS_ID = PREVIOUS_LIST.dataset.progressId;
+                const CURRENT_PROGRESS_ID = TARGET_LIST.dataset.progressId;
+                const TODO_ID = ev.item.dataset.todoId;
+                const DATA = {
+                    todoId: TODO_ID,
+                    currentProgressId: CURRENT_PROGRESS_ID,
+                    previousProgressId: PREVIOUS_PROGRESS_ID,
+                };
+
+                // Send request to the server
+                this.$store.dispatch('PersonalTaskModule/updateProgress', DATA);
+            };
+            const onMove = (ev, originalEvent) => {
+                const {
+                    offsetHeight: HEIGHT,
+                    offsetWidth: WIDTH,
+                    offsetLeft: LEFT,
+                    offsetTop: TOP,
+                } = originalEvent.target;
+
+                Object.assign(this.$refs.placeholder.style, {
+                    display: 'block',
+                    height: `${HEIGHT}px`,
+                    width: `${WIDTH}px`,
+                    top: `${TOP}px`,
+                    left: `${LEFT}px`,
+                });
+            };
+
+            // Initialize options for sorting
+            const OPTIONS = {
+                group,
+                ...this.sortableOptions,
+                onStart,
+                onEnd,
+                onMove,
+                onAdd,
+            };
+
+            Sortable.create(wrapper, OPTIONS);
+        },
     },
     computed: {
         getStartedTasks() {
             return this.$store.state['PersonalTaskModule'].started;
+        },
+        getInProgressTasks() {
+            return this.$store.state['PersonalTaskModule'].inProgress;
+        },
+        getCompletedTasks() {
+            return this.$store.state['PersonalTaskModule'].completed;
         },
     },
 };
@@ -136,6 +197,9 @@ export default {
             @include font-size.responsive((
                 xsm: map.get(major-second.$scale, 3),
             ));
+        }
+        &__items{
+            height: 100%;
         }
         &__placeholder{
             position: absolute;
