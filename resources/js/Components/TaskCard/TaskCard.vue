@@ -19,11 +19,6 @@
         </VDropdown>
         <h3 class="task__group-title">{{ task.title }}</h3>
         <p class="task__group-description">{{ task.description }}</p>
-        <div class="task__tag-wrapper">
-            <span class="task__tag">Web Development</span>
-            <span class="task__tag">Web Development</span>
-            <span class="task__tag">Web Development</span>
-        </div>
     </div>
 </template>
 
@@ -106,31 +101,6 @@ export default {
             color: map.get(text.$main, 500);
             @include font-size.responsive((
                 xsm: map.get(major-second.$scale, 2)
-            ));
-        }
-        &__tag-wrapper{
-            display: flex;
-            flex-wrap: wrap;
-            @include margin.top((
-                xsm: 30
-            ));
-        }
-        &__tag{
-            font-weight: 600;
-            border-radius: 7px;
-            background-color: map.get(main.$primary, 50);
-            color: map.get(main.$primary, 400);
-            @include font-size.responsive((
-                xsm: map.get(major-second.$scale, 1)
-            ));
-            @include padding.all-sides((
-                xsm: 7
-            ));
-            @include margin.right((
-                xsm: 7
-            ));
-            @include margin.bottom((
-                xsm: 7
             ));
         }
     }
