@@ -39,7 +39,6 @@ export default {
                     duration: 350,
                     width: `${width}%`,
                     complete: () => {
-                        console.log('STOPPED');
                         this.$refs.progress.style = null;
                         this.shouldShowProgress = false;
                         this.progressAnimationId = null;

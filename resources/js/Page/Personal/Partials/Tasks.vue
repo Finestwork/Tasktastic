@@ -55,6 +55,7 @@ import LoadIndicators from '../../../Components/Loaders/LoadIndicators';
 
 // NPM
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
+import { useToast } from 'vue-toastification';
 
 export default {
     components: {
@@ -88,10 +89,6 @@ export default {
     },
 
     methods: {
-        /*
-         * TODO:
-         *  Error State
-         */
         initSortable(wrapper, group) {
             // Functions to handle group
             const onStart = (ev) => {
@@ -135,7 +132,22 @@ export default {
                     this.loadingIndicatorWidth = 100;
                 };
                 const handleError = () => {
-                    //
+                    const toast = useToast();
+                    toast.error("Can't update task, please do it later.", {
+                        position: 'bottom-right',
+                        timeout: 3000,
+                        closeOnClick: false,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                    });
+
+                    const CHILD = ev.item;
+                    // Put back the last inserted item
+                    PREVIOUS_LIST.insertBefore(
+                        CHILD,
+                        PREVIOUS_LIST.children[ev.oldIndex]
+                    );
                 };
 
                 // Send request to the server
@@ -199,6 +211,7 @@ export default {
 @use '../../../../scss/2-Tools/mixins/css-properties/font-size';
 @use '../../../../scss/2-Tools/mixins/css-properties/padding';
 @use '../../../../scss/2-Tools/mixins/css-properties/margin';
+@use '../../../../scss/2-Tools/mixins/css-properties/width-and-height';
 @use '../../../../scss/4-Layout/columns';
 
 // prettier-ignore
@@ -247,5 +260,33 @@ export default {
 
 .loader--load-indicator {
     z-index: 999;
+}
+
+// prettier-ignore
+.Vue-Toastification__container .Vue-Toastification__toast{
+    min-height: 0;
+    @include padding.all-sides((
+        xsm: 10
+    ));
+
+    .Vue-Toastification__icon{
+        @include margin.right((
+            xsm: 10
+        ));
+        @include width-and-height.set((
+            xsm: (width: 15px)
+        ));
+    }
+
+    .Vue-Toastification__toast-body{
+        font-weight: 600;
+        @include font-size.responsive((
+            xsm: map.get(major-second.$scale, 3)
+        ));
+    }
+
+    .Vue-Toastification__progress-bar{
+        bottom: -1px;
+    }
 }
 </style>
