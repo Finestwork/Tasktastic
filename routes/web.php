@@ -15,6 +15,7 @@ Route::prefix('/todo')->group(function(){
 
     Route::prefix('/personal')->group(function(){
         Route::post('/all', [PersonalController::class, 'all']);
+        Route::post('/browse', [PersonalController::class, 'browse']);
         Route::post('/update', [PersonalController::class, 'update']);
         Route::post('/update-progress', [PersonalController::class, 'updateProgress']);
     });

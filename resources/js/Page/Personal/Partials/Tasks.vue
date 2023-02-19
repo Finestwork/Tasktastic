@@ -195,8 +195,8 @@ export default {
         resetProgressData() {
             this.loadingIndicatorWidth = 0;
         },
-        viewCard(todoId) {
-            this.$emit('viewCard', todoId);
+        viewCard(todoObj) {
+            this.$emit('viewCard', todoObj);
         },
     },
     computed: {

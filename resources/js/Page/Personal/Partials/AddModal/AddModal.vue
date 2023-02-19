@@ -114,7 +114,6 @@ export default {
                 this.shouldShowSuccessAlert = true;
             };
             const handleErr = (err) => {
-                console.log(err);
                 this.isSaveBtnLoading = false;
                 this.shouldShowErrorAlert = true;
             };

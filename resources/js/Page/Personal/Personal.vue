@@ -15,6 +15,7 @@
                     <ViewModal
                         :showModal="canShowViewTaskModal"
                         :editTodoId="editTodoId"
+                        :progressId="editProgressId"
                         @cancelAddingTask="hideViewTaskModal"
                     />
                 </Teleport>
@@ -76,6 +77,7 @@ export default {
             canDisplayLoader: true,
             canShowViewTaskModal: false,
             editTodoId: 0,
+            editProgressId: -1,
         };
     },
     mounted() {
@@ -134,9 +136,10 @@ export default {
             this.canShowAddTaskModal = false;
             this.$refs.pageWrapper.$el.style.overflowY = null;
         },
-        showViewTaskModal(todoId) {
+        showViewTaskModal({ todoId, progressId }) {
             this.canShowViewTaskModal = true;
             this.editTodoId = parseInt(todoId);
+            this.editProgressId = parseInt(progressId);
         },
         hideViewTaskModal() {
             this.canShowViewTaskModal = false;

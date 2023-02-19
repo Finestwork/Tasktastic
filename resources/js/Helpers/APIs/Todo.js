@@ -10,15 +10,21 @@ export default class Todo {
     }
 
     // Update a personal todo progress
-    static updateProgress(data, options = {}) {
+    static updatePersonalProgress(data, options = {}) {
         const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
         return axios.post('/todo/personal/update-progress', data, OPTIONS);
     }
 
     // Update a personal todo
-    static update(DATA, options = {}) {
+    static updatePersonalTask(DATA, options = {}) {
         const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
         return axios.post('/todo/personal/update', DATA, OPTIONS);
+    }
+
+    // Update a personal todo
+    static browsePersonalTask(data, options = {}) {
+        const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
+        return axios.post('/todo/personal/browse', data, OPTIONS);
     }
 
     // Fetch all personal tasks

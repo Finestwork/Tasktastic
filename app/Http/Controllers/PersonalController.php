@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SessionHelper;
+use App\Models\Checklist;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 
@@ -43,8 +44,8 @@ class PersonalController extends Controller
         return response()->json(['started' => $STARTED, 'in_progress' => $IN_PROGRESS, 'completed' => $COMPLETED]);
     }
 
-    // Fetch all personal tasks
-    public function update()
+    // Browse personal task
+    public function browse()
     {
         SessionHelper::avoidCSRF();
 
@@ -62,6 +63,49 @@ class PersonalController extends Controller
             ->with('checklists')
             ->get()
             ->first();
+
+        return response()->json($TODO);
+    }
+
+    // Update personal task
+    public function update()
+    {
+        SessionHelper::avoidCSRF();
+
+        request()->validate([
+            'todoId' => 'required|integer|exists:todos,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'checklist' => 'required|array',
+        ]);
+
+        $TODO_ID = request()->todoId;
+        $TITLE = request()->title;
+        $DESCRIPTION = request()->description;
+        $NEW_CHECKLIST = request()->checklist;
+
+        $TODO = Todo::query()
+            ->where([
+                ['user_id', '=', auth()->id()],
+                ['id', '=', $TODO_ID],
+            ])->update([
+                'title' => $TITLE,
+                'description' => $DESCRIPTION
+            ]);
+
+        $CHECKLISTS = Checklist::query()->where('todo_id', $TODO_ID)->get()->all();
+
+        foreach($CHECKLISTS as $ch){
+            Checklist::query()->where('id', $ch->id)->get()->first()->delete();
+        }
+
+        foreach($NEW_CHECKLIST as $nc){
+            Checklist::query()->create([
+                'todo_id' => $TODO_ID,
+                'name'=>$nc
+            ]);
+        }
+
 
         return response()->json($TODO);
     }

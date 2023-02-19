@@ -26,6 +26,8 @@
                 ref="checklist"
                 :clearForms="clearForms"
                 :todoItems="todoItems"
+                @addChecklist="addTodoItems"
+                @removeChecklist="removeTodoItems"
             />
         </div>
 
@@ -65,6 +67,10 @@ export default {
             type: Number,
             required: true,
         },
+        progressId: {
+            type: Number,
+            required: true,
+        },
     },
     data() {
         return {
@@ -100,6 +106,12 @@ export default {
     },
     emits: ['cancelAddingTask'],
     methods: {
+        addTodoItems(value) {
+            this.todoItems.push(value);
+        },
+        removeTodoItems(ind) {
+            this.todoItems.splice(ind, 1);
+        },
         cancelAddingTask() {
             this.errors = [];
             this.isSaveBtnLoading = false;
@@ -113,6 +125,11 @@ export default {
             this.todoItems = [];
             this.$emit('cancelAddingTask');
         },
+
+        /*
+         * TODO:
+         *  Clear forms should be removed
+         */
         saveTask(taskObj) {
             this.isSaveBtnLoading = true;
             this.clearForms = false;
@@ -128,7 +145,7 @@ export default {
                 this.errors.push('• Please add a description');
             }
 
-            if (this.$refs.checklist.todos.length === 0) {
+            if (this.todoItems.length === 0) {
                 this.errors.push('• Add at least 1 todo');
             }
 
@@ -138,26 +155,23 @@ export default {
             }
 
             const DATA = Object.assign(taskObj, {
-                todos: this.$refs.checklist.todos,
+                todoId: this.editTodoId,
+                title: taskObj.title,
+                description: taskObj.description,
+                checklist: this.$refs.checklist.todoItems,
             });
 
             // Functions to handle the request
             const handleResult = () => {
-                this.isSaveBtnLoading = false;
-                this.clearForms = true;
-                this.shouldShowSuccessAlert = true;
+                location.reload();
             };
-            const handleErr = (err) => {
-                console.log(err);
+            const handleErr = () => {
                 this.isSaveBtnLoading = false;
                 this.shouldShowErrorAlert = true;
             };
 
             // Send the request to the server
-            this.$store
-                .dispatch('PersonalTaskModule/create', DATA)
-                .then(handleResult)
-                .catch(handleErr);
+            Todo.updatePersonalTask(DATA).then(handleResult).catch(handleErr);
         },
     },
     computed: {
@@ -188,12 +202,13 @@ export default {
 
                         this.todoTitle = DATA.title;
                         this.todoDescription = DATA.description;
-                        this.todoItems = DATA.checklists.slice();
+                        this.todoItems = DATA.checklists.map(
+                            (checklist) => checklist.name
+                        );
                     } else {
                         this.isComponentLoading = false;
                         // Empty
                     }
-                    console.log(DATA);
                 };
                 const handleError = (err) => {
                     this.isComponentLoading = false;
@@ -201,7 +216,9 @@ export default {
                 };
 
                 // Send the request to the server
-                Todo.update(DATA).then(handleResult).catch(handleError);
+                Todo.browsePersonalTask(DATA)
+                    .then(handleResult)
+                    .catch(handleError);
             }
         },
     },

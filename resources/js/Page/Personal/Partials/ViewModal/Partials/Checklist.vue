@@ -12,11 +12,7 @@
                     :key="todo"
                     :data-todo-ind="ind"
                 >
-                    <input
-                        type="text"
-                        :placeholder="todo.name"
-                        :value="todo.name"
-                    />
+                    <input type="text" :placeholder="todo" :value="todo" />
                     <button type="button" @click="removeTodo">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -73,20 +69,20 @@ export default {
             areTodosHidden: false,
         };
     },
+    emits: ['addChecklist', 'removeChecklist'],
     methods: {
         addTodo(e) {
             if (e.key !== 'Enter') return;
 
             const INPUT = e.target;
             const VALUE = INPUT.value.trim();
-            this.todos.push({ text: VALUE });
+            this.$emit('addChecklist', VALUE);
             INPUT.value = '';
         },
         removeTodo(e) {
             const BTN = e.currentTarget;
             const IND = parseInt(BTN.parentElement.dataset.todoInd);
-
-            this.todos.splice(IND, 1);
+            this.$emit('removeChecklist', IND);
         },
     },
     watch: {

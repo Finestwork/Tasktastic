@@ -56,8 +56,15 @@ export default {
     methods: {
         viewCard(e) {
             const BTN = e.currentTarget;
+            const PROGRESS_ID =
+                this.$refs.dropdown.$el.closest('.task__items').dataset
+                    .progressId;
             const TODO_ID = BTN.dataset.todoId;
-            this.$emit('viewCard', TODO_ID);
+
+            this.$emit('viewCard', {
+                todoId: TODO_ID,
+                progressId: PROGRESS_ID,
+            });
         },
         deleteCard() {},
     },

@@ -53,6 +53,14 @@ export default {
             // Finally remove the item from the previous state
             PREVIOUS_STATE.splice(IND, 1);
         },
+        updateTask(state, newTaskData) {
+            const { todoState, ind, title, description, checklists } =
+                newTaskData;
+
+            state[todoState][ind].title = title;
+            state[todoState][ind].description = description;
+            state[todoState][ind].checklists = checklists;
+        },
     },
     actions: {
         // Fetch all personal tasks (started, in-progress, completed)
@@ -70,7 +78,7 @@ export default {
             return REQUEST;
         },
 
-        // Create a todo task
+        // Create a personal todo task
         create({ commit }, data) {
             const REQUEST = Todo.create(data);
 
@@ -82,13 +90,13 @@ export default {
             return REQUEST;
         },
 
-        // Update todo list progress
+        // Update a personal todo list progress
         updateProgress(
             { commit },
             { todoId, currentProgressId, previousProgressId },
             axiosOptions = {}
         ) {
-            const REQUEST = Todo.updateProgress(
+            const REQUEST = Todo.updatePersonalProgress(
                 {
                     todoId,
                     progressId: currentProgressId,
