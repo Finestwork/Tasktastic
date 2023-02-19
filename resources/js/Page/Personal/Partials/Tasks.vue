@@ -7,6 +7,7 @@
                     v-for="task in getStartedTasks"
                     :task="task"
                     :data-todo-id="task.id"
+                    :shouldHidePopper="shouldHideDropdownPopper"
                 />
             </div>
         </section>
@@ -21,6 +22,7 @@
                     v-for="task in getInProgressTasks"
                     :task="task"
                     :data-todo-id="task.id"
+                    :shouldHidePopper="shouldHideDropdownPopper"
                 />
             </div>
         </section>
@@ -35,6 +37,7 @@
                     v-for="task in getCompletedTasks"
                     :task="task"
                     :data-todo-id="task.id"
+                    :shouldHidePopper="shouldHideDropdownPopper"
                 />
             </div>
         </section>
@@ -71,6 +74,7 @@ export default {
             sortable: null,
             drag: false,
             loadingIndicatorWidth: 0,
+            shouldHideDropdownPopper: false,
         };
     },
     mounted() {
@@ -92,6 +96,7 @@ export default {
         initSortable(wrapper, group) {
             // Functions to handle group
             const onStart = (ev) => {
+                this.shouldHideDropdownPopper = true;
                 const IND = ev.oldIndex;
                 const PARENT = ev.target;
                 const TARGET = PARENT.children[IND];
@@ -112,6 +117,7 @@ export default {
                 });
             };
             const onEnd = () => {
+                this.shouldHideDropdownPopper = false;
                 this.$refs.placeholder.style = null;
             };
             const onAdd = (ev) => {
@@ -237,6 +243,10 @@ export default {
         }
         &__items{
             height: 100%;
+            .sortable-fallback {
+                cursor: grabbing;
+                opacity: 1 !important;
+            }
         }
         &__placeholder{
             position: absolute;
