@@ -4,11 +4,18 @@
             <!-- Main Content -->
             <div v-if="shouldDisplayMainContent">
                 <AddTaskButton @showAddTaskModal="showAddTaskModal" />
-                <Tasks />
+                <Tasks @viewCard="showViewTaskModal" />
                 <Teleport to="body">
                     <AddModal
                         :showModal="canShowAddTaskModal"
                         @cancelAddingTask="hideAddTaskModal"
+                    />
+                </Teleport>
+                <Teleport to="body">
+                    <ViewModal
+                        :showModal="canShowViewTaskModal"
+                        :editTodoId="editTodoId"
+                        @cancelAddingTask="hideViewTaskModal"
                     />
                 </Teleport>
             </div>
@@ -35,6 +42,7 @@ import BouncingBox from '../../Components/Loaders/BouncingBox';
 import AddTaskButton from './Partials/AddTaskButton';
 import Tasks from './Partials/Tasks';
 import AddModal from './Partials/AddModal/AddModal';
+import ViewModal from './Partials/ViewModal/ViewModal';
 
 // Helpers
 import Auth from '../../Helpers/APIs/Auth';
@@ -47,6 +55,7 @@ export default {
         AddTaskButton,
         Tasks,
         AddModal,
+        ViewModal,
     },
     data() {
         return {
@@ -65,6 +74,8 @@ export default {
             canShowAddTaskModal: false,
             canDisplayTaskError: false,
             canDisplayLoader: true,
+            canShowViewTaskModal: false,
+            editTodoId: 0,
         };
     },
     mounted() {
@@ -122,6 +133,13 @@ export default {
         hideAddTaskModal() {
             this.canShowAddTaskModal = false;
             this.$refs.pageWrapper.$el.style.overflowY = null;
+        },
+        showViewTaskModal(todoId) {
+            this.canShowViewTaskModal = true;
+            this.editTodoId = parseInt(todoId);
+        },
+        hideViewTaskModal() {
+            this.canShowViewTaskModal = false;
         },
     },
     computed: {

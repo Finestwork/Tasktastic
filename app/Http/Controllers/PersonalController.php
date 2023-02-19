@@ -43,6 +43,29 @@ class PersonalController extends Controller
         return response()->json(['started' => $STARTED, 'in_progress' => $IN_PROGRESS, 'completed' => $COMPLETED]);
     }
 
+    // Fetch all personal tasks
+    public function update()
+    {
+        SessionHelper::avoidCSRF();
+
+        request()->validate([
+            'todoId' => 'required|integer|exists:todos,id'
+        ]);
+
+        $TODO_ID = request()->todoId;
+
+        $TODO = Todo::query()
+            ->where([
+                ['user_id', '=', auth()->id()],
+                ['id', '=', $TODO_ID],
+            ])
+            ->with('checklists')
+            ->get()
+            ->first();
+
+        return response()->json($TODO);
+    }
+
     // Update todo task's progress
     public function updateProgress()
     {

@@ -6,8 +6,8 @@
                 <TaskCard
                     v-for="task in getStartedTasks"
                     :task="task"
-                    :data-todo-id="task.id"
                     :shouldHidePopper="shouldHideDropdownPopper"
+                    @viewCard="viewCard"
                 />
             </div>
         </section>
@@ -21,8 +21,8 @@
                 <TaskCard
                     v-for="task in getInProgressTasks"
                     :task="task"
-                    :data-todo-id="task.id"
                     :shouldHidePopper="shouldHideDropdownPopper"
+                    @viewCard="viewCard"
                 />
             </div>
         </section>
@@ -36,8 +36,8 @@
                 <TaskCard
                     v-for="task in getCompletedTasks"
                     :task="task"
-                    :data-todo-id="task.id"
                     :shouldHidePopper="shouldHideDropdownPopper"
+                    @viewCard="viewCard"
                 />
             </div>
         </section>
@@ -92,7 +92,7 @@ export default {
             put: ['started', 'in-progress'],
         });
     },
-
+    emits: ['viewCard'],
     methods: {
         initSortable(wrapper, group) {
             // Functions to handle group
@@ -194,6 +194,9 @@ export default {
         },
         resetProgressData() {
             this.loadingIndicatorWidth = 0;
+        },
+        viewCard(todoId) {
+            this.$emit('viewCard', todoId);
         },
     },
     computed: {

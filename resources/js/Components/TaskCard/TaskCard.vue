@@ -1,5 +1,5 @@
 <template>
-    <div class="task-card">
+    <div class="task-card" :data-todo-id="task.id">
         <VDropdown
             ref="dropdown"
             class="task__option-btn-wrapper"
@@ -14,8 +14,22 @@
             </button>
 
             <template #popper>
-                <button type="button" @click="viewCard">View</button>
-                <button type="button" @click="deleteCard">Delete</button>
+                <button
+                    type="button"
+                    v-close-popper
+                    @click="viewCard"
+                    :data-todo-id="task.id"
+                >
+                    View
+                </button>
+                <button
+                    type="button"
+                    v-close-popper
+                    @click="deleteCard"
+                    :data-todo-id="task.id"
+                >
+                    Delete
+                </button>
             </template>
         </VDropdown>
         <h3 class="task__group-title">{{ task.title }}</h3>
@@ -33,19 +47,19 @@ export default {
             type: Object,
             required: true,
         },
-
         shouldHidePopper: {
             type: Boolean,
             required: true,
         },
     },
+    emits: ['viewCard'],
     methods: {
-        viewCard() {
-            this.closePopperDropdown = false;
+        viewCard(e) {
+            const BTN = e.currentTarget;
+            const TODO_ID = BTN.dataset.todoId;
+            this.$emit('viewCard', TODO_ID);
         },
-        deleteCard() {
-            this.closePopperDropdown = false;
-        },
+        deleteCard() {},
     },
     watch: {
         shouldHidePopper(shouldHidePopper) {
