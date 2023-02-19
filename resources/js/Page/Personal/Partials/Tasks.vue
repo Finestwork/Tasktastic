@@ -8,6 +8,7 @@
                     :task="task"
                     :shouldHidePopper="shouldHideDropdownPopper"
                     @viewCard="viewCard"
+                    @deleteCard="deleteTask"
                 />
             </div>
         </section>
@@ -23,6 +24,7 @@
                     :task="task"
                     :shouldHidePopper="shouldHideDropdownPopper"
                     @viewCard="viewCard"
+                    @deleteCard="deleteTask"
                 />
             </div>
         </section>
@@ -38,6 +40,7 @@
                     :task="task"
                     :shouldHidePopper="shouldHideDropdownPopper"
                     @viewCard="viewCard"
+                    @deleteCard="deleteTask"
                 />
             </div>
         </section>
@@ -59,6 +62,7 @@ import LoadIndicators from '../../../Components/Loaders/LoadIndicators';
 // NPM
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import { useToast } from 'vue-toastification';
+import Todo from '../../../Helpers/APIs/Todo';
 
 export default {
     components: {
@@ -197,6 +201,28 @@ export default {
         },
         viewCard(todoObj) {
             this.$emit('viewCard', todoObj);
+        },
+        deleteTask(todoId) {
+            this.loadingIndicatorWidth = 20;
+
+            // Functions to handle the request
+            const handleResult = () => {
+                location.reload();
+            };
+            const handleError = () => {
+                const toast = useToast();
+                toast.error("Can't delete task, please do it later.", {
+                    position: 'bottom-right',
+                    timeout: 3000,
+                    closeOnClick: false,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            };
+
+            // Send request to the server
+            Todo.delete(todoId).then(handleResult).catch(handleError);
         },
     },
     computed: {

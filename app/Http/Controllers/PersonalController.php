@@ -110,6 +110,22 @@ class PersonalController extends Controller
         return response()->json($TODO);
     }
 
+    // Delete personal task
+    public function delete()
+    {
+        SessionHelper::avoidCSRF();
+
+        request()->validate([
+            'todoId' => 'required|integer|exists:todos,id'
+        ]);
+
+        $TODO_ID = request()->todoId;
+
+        $RESULT = Todo::query()->where('id', $TODO_ID)->delete();
+        
+        return response()->json($RESULT);
+    }
+
     // Update todo task's progress
     public function updateProgress()
     {

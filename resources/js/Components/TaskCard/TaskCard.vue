@@ -52,7 +52,7 @@ export default {
             required: true,
         },
     },
-    emits: ['viewCard'],
+    emits: ['viewCard', 'deleteCard'],
     methods: {
         viewCard(e) {
             const BTN = e.currentTarget;
@@ -66,7 +66,11 @@ export default {
                 progressId: PROGRESS_ID,
             });
         },
-        deleteCard() {},
+        deleteCard(e) {
+            const BTN = e.currentTarget;
+            const TODO_ID = BTN.dataset.todoId;
+            this.$emit('deleteCard', TODO_ID);
+        },
     },
     watch: {
         shouldHidePopper(shouldHidePopper) {

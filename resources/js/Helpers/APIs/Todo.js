@@ -3,10 +3,16 @@ import axios from 'axios';
 export default class Todo {
     static #CSRF_TOKEN = document.querySelector('input[name="_token"]').value;
 
-    // Create a personal todo
+    // Creates a personal todo
     static create(data, options = {}) {
         const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
         return axios.post('/todo/create', data, OPTIONS);
+    }
+
+    // Deletes a personal todo
+    static delete(todoId, options = {}) {
+        const OPTIONS = Object.assign(Todo.#defaultHeaders(), options);
+        return axios.post('/todo/personal/delete', { todoId }, OPTIONS);
     }
 
     // Update a personal todo progress
