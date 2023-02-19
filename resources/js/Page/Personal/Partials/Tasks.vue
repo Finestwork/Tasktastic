@@ -70,6 +70,7 @@ export default {
             sortableOptions: {
                 forceFallback: true,
                 animation: 250,
+                filter: '.task__option-btn',
             },
             sortable: null,
             drag: false,
