@@ -122,7 +122,7 @@ class PersonalController extends Controller
         $TODO_ID = request()->todoId;
 
         $RESULT = Todo::query()->where('id', $TODO_ID)->delete();
-        
+
         return response()->json($RESULT);
     }
 
